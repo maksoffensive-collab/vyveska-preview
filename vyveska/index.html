@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вывеска — сайты для малого бизнеса</title>
+  <meta name="description" content="Сайты для кафе, пекарен, салонов и мастерских. Визитка от 7 дней, фиксированная цена, под ключ или с поддержкой. Всё в переписке.">
+  <meta property="og:title" content="Вывеска — сайты для малого бизнеса">
+  <meta property="og:description" content="Без сайта вы закрыты. Даже когда открыты. Делаем бизнес заметным в интернете.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0c0a11">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c0a11'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='700' font-size='38' text-anchor='middle' fill='%23ff4f6e'%3EВ%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="brief.css">
+  <script>
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');
+  </script>
+</head>
+<body>
+
+  <!-- Навигация -->
+  <header class="nav" data-nav>
+    <a href="#top" class="logo" aria-label="Вывеска — на главную">
+      <span class="logo__mark">В</span>
+      <span class="logo__word">Вывеска</span>
+    </a>
+    <nav class="nav__links" aria-label="Разделы">
+      <a href="#tiers">Цены</a>
+      <a href="#process">Как работаем</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a href="https://t.me/" class="btn btn--small btn--neon" target="_blank" rel="noopener">Написать</a>
+  </header>
+
+  <main id="top">
+
+    <!-- 1. Вывеска загорается -->
+    <section class="hero" data-hero>
+      <div class="hero__wall" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__spot" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <p class="label hero__label" data-hero-in>студия сайтов для малого бизнеса</p>
+
+        <div class="sign" aria-hidden="true">
+          <span class="sign__wire sign__wire--l"></span>
+          <span class="sign__wire sign__wire--r"></span>
+          <div class="sign__text" data-sign>ВЫВЕСКА</div>
+          <div class="sign__reflection" data-sign-reflection>ВЫВЕСКА</div>
+        </div>
+
+        <h1 class="hero__title" data-hero-in>
+          <span class="sr-only">Вывеска — </span>Сделаем вам сайт&nbsp;— быстро и&nbsp;дёшево
+        </h1>
+        <p class="hero__lead" data-hero-in>
+          Кафе, пекарни, салоны, мастерские. Визитка за&nbsp;7&nbsp;дней, цена известна заранее,
+          а&nbsp;все договорённости — в&nbsp;переписке.
+        </p>
+        <div class="hero__actions" data-hero-in>
+          <button type="button" class="btn btn--neon" data-magnetic data-brief-open>Подобрать сайт за 2 минуты</button>
+          <a href="#tiers" class="btn btn--ghost">Смотреть цены</a>
+        </div>
+      </div>
+
+      <ul class="hero__facts" data-hero-in>
+        <li>бесплатный концепт</li>
+        <li>визитка без предоплаты</li>
+        <li>готово от 7 дней</li>
+      </ul>
+      <div class="hero__scroll" aria-hidden="true"><span></span>листайте</div>
+    </section>
+
+    <!-- 2. Бегущая строка -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" data-marquee>
+        <div class="marquee__group">
+          <span>кафе</span><i>✦</i><span class="o">пекарни</span><i>✦</i><span>кофейни</span><i>✦</i>
+          <span class="o">барбершопы</span><i>✦</i><span>салоны красоты</span><i>✦</i><span class="o">автосервисы</span><i>✦</i>
+          <span>цветочные</span><i>✦</i><span class="o">студии йоги</span><i>✦</i><span>мастерские</span><i>✦</i>
+        </div>
+        <div class="marquee__group">
+          <span>кафе</span><i>✦</i><span class="o">пекарни</span><i>✦</i><span>кофейни</span><i>✦</i>
+          <span class="o">барбершопы</span><i>✦</i><span>салоны красоты</span><i>✦</i><span class="o">автосервисы</span><i>✦</i>
+          <span>цветочные</span><i>✦</i><span class="o">студии йоги</span><i>✦</i><span>мастерские</span><i>✦</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Манифест -->
+    <section class="manifest" data-manifest>
+      <p class="label">почему это важно</p>
+      <p class="manifest__text" data-words>
+        Люди ищут, где поесть, подстричься и&nbsp;починить машину, — в&nbsp;телефоне.
+        Если вас там нет, вы <mark class="manifest__alarm" data-alarm>закрыты</mark>. Даже&nbsp;когда открыты.
+      </p>
+    </section>
+
+    <!-- 4. Витрины / тарифы -->
+    <section class="tiers" id="tiers" data-tiers data-mode="support">
+      <div class="tiers__head">
+        <div>
+          <p class="label">витрины</p>
+          <h2>Три витрины.<br>Выберите свою.</h2>
+        </div>
+        <div class="switch-wrap">
+          <div class="switch" role="radiogroup" aria-label="Формат работы" data-switch>
+            <span class="switch__thumb" aria-hidden="true"></span>
+            <button type="button" role="radio" aria-checked="true" data-mode="support">С поддержкой</button>
+            <button type="button" role="radio" aria-checked="false" data-mode="key">Под ключ</button>
+          </div>
+          <p class="switch__hint hint--support">Меньше на старте. Хостинг, домен и&nbsp;правки — на мне за&nbsp;3&nbsp;500&nbsp;₽/мес.</p>
+          <p class="switch__hint hint--key">Разовая оплата. WordPress с&nbsp;админкой: цены и&nbsp;меню меняете сами.</p>
+        </div>
+      </div>
+
+      <div class="tiers__viewport">
+        <div class="tiers__track" data-track>
+
+          <article class="shop shop--1" data-shop>
+            <div class="shop__sign"><span>Визитка</span></div>
+            <div class="shop__awning" aria-hidden="true"></div>
+            <div class="shop__window">
+              <p class="shop__num">01 / одна страница</p>
+              <p class="shop__desc">Всё главное на&nbsp;одном экране телефона: кто вы, что предлагаете, цены, адрес и&nbsp;кнопка «написать».</p>
+              <ul class="shop__list">
+                <li>до 6 блоков: о вас, меню или услуги, фото, контакты</li>
+                <li>карта и кнопки мессенджеров</li>
+                <li>базовое SEO, чтобы находили в поиске</li>
+                <li>подключение домена</li>
+              </ul>
+              <div class="shop__meta"><span>срок</span><strong>7–10 дней</strong></div>
+              <div class="price" data-price
+                   data-support="от 15 000 ₽" data-support-note="+ 3 500 ₽/мес поддержка"
+                   data-key="от 25 000 ₽" data-key-note="разово · всё ваше">
+                <span class="price__value">от 15 000 ₽</span>
+                <span class="price__note">+ 3 500 ₽/мес поддержка</span>
+              </div>
+              <a class="shop__example" href="../ganash/index.html" target="_blank" rel="noopener">Пример: торты на заказ <em>смотреть ↗</em></a>
+            </div>
+          </article>
+
+          <article class="shop shop--2" data-shop>
+            <div class="shop__sign"><span>Многостраничный</span></div>
+            <div class="shop__awning" aria-hidden="true"></div>
+            <div class="shop__window">
+              <p class="shop__num">02 / до 7 страниц</p>
+              <p class="shop__desc">Для тех, кому есть что показать: меню по&nbsp;разделам, услуги, команда, галерея и&nbsp;заявки с&nbsp;сайта.</p>
+              <ul class="shop__list">
+                <li>отдельные страницы меню, услуг и «о нас»</li>
+                <li>галерея и блок с командой</li>
+                <li>форма заявки или брони столика</li>
+                <li>заявки приходят вам в Telegram</li>
+              </ul>
+              <div class="shop__meta"><span>срок</span><strong>2–3 недели</strong></div>
+              <div class="price" data-price
+                   data-support="от 35 000 ₽" data-support-note="+ 3 500 ₽/мес поддержка"
+                   data-key="от 55 000 ₽" data-key-note="разово · всё ваше">
+                <span class="price__value">от 35 000 ₽</span>
+                <span class="price__note">+ 3 500 ₽/мес поддержка</span>
+              </div>
+              <a class="shop__example is-soon" aria-disabled="true">Пример: ресторан <em>скоро</em></a>
+            </div>
+          </article>
+
+          <article class="shop shop--3" data-shop>
+            <div class="shop__sign"><span>С онлайн-записью</span></div>
+            <div class="shop__awning" aria-hidden="true"></div>
+            <div class="shop__window">
+              <p class="shop__num">03 / сложный сайт</p>
+              <p class="shop__desc">Сайт, который работает вместо администратора: клиенты сами записываются, бронируют и&nbsp;заказывают.</p>
+              <ul class="shop__list">
+                <li>онлайн-запись с выбором мастера, даты и времени</li>
+                <li>каталог товаров или услуг с корзиной</li>
+                <li>уведомления о записях в Telegram</li>
+                <li>всё из «Многостраничного»</li>
+              </ul>
+              <div class="shop__meta"><span>срок</span><strong>3–5 недель</strong></div>
+              <div class="price" data-price
+                   data-support="от 70 000 ₽" data-support-note="+ 3 500 ₽/мес поддержка"
+                   data-key="от 110 000 ₽" data-key-note="разово · всё ваше">
+                <span class="price__value">от 70 000 ₽</span>
+                <span class="price__note">+ 3 500 ₽/мес поддержка</span>
+              </div>
+              <a class="shop__example is-soon" aria-disabled="true">Пример: барбершоп <em>скоро</em></a>
+            </div>
+          </article>
+
+          <div class="tiers__end">
+            <p class="label">своя витрина</p>
+            <p class="tiers__end-title">Нужно что-то особенное?</p>
+            <p>Опишите идею — соберу сайт под ваши задачи и&nbsp;назову точную цену.</p>
+            <a href="https://t.me/" class="btn btn--neon" target="_blank" rel="noopener">Рассказать об идее</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Два формата -->
+    <section class="modes section">
+      <div class="container">
+        <p class="label" data-reveal>два формата</p>
+        <h2 data-reveal>Сайт ваш — в&nbsp;любом случае</h2>
+
+        <div class="modes__grid">
+          <article class="mode" data-reveal>
+            <svg class="mode__icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="24" r="9"/><path d="M25 24h18M37 24v7M43 24v5"/></svg>
+            <h3>Под ключ</h3>
+            <p class="mode__lead">Один раз заплатили — и&nbsp;сайт полностью ваш.</p>
+            <ul class="check">
+              <li>WordPress с понятной админкой</li>
+              <li>цены, меню и фото меняете сами</li>
+              <li>все файлы, доступы и домен — у вас</li>
+              <li>короткая инструкция, как всё устроено</li>
+            </ul>
+            <p class="mode__price">разовая оплата, без абонентки</p>
+          </article>
+
+          <div class="modes__bridge" data-reveal aria-hidden="true">
+            <span>выкуп<br>в любой момент</span>
+          </div>
+
+          <article class="mode mode--accent" data-reveal>
+            <svg class="mode__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5v8M24 35v8M5 24h8M35 24h8M10.5 10.5l5.7 5.7M31.8 31.8l5.7 5.7M10.5 37.5l5.7-5.7M31.8 16.2l5.7-5.7"/><circle cx="24" cy="24" r="5"/></svg>
+            <h3>С поддержкой</h3>
+            <p class="mode__lead">Меньше на&nbsp;старте, никаких забот потом.</p>
+            <ul class="check">
+              <li>хостинг и продление домена — на мне</li>
+              <li>правки цен, текстов и фото</li>
+              <li>резервные копии и обновления</li>
+              <li>пишете «поменяй цену на капучино» — меняю в течение дня</li>
+            </ul>
+            <p class="mode__price"><strong>3 500 ₽/мес</strong> · или 35 000 ₽ за год — 2 месяца в подарок</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Процесс -->
+    <section class="process section" id="process">
+      <div class="container process__inner">
+        <div class="process__head">
+          <p class="label" data-reveal>как зажигаем вывеску</p>
+          <h2 data-reveal>Пять шагов от&nbsp;сообщения до&nbsp;запуска</h2>
+          <p class="muted" data-reveal>Сроки — на примере визитки.</p>
+        </div>
+
+        <div class="steps" data-steps>
+          <span class="steps__rail" aria-hidden="true"><span class="steps__beam" data-beam></span></span>
+          <ol class="steps__list">
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__day">день 1</span>
+            <h3>Проходите подбор или пишете</h3>
+            <p>Пара минут в&nbsp;чате на&nbsp;сайте или сообщение в&nbsp;Telegram. Отвечаю в&nbsp;течение дня и&nbsp;называю точную цену.</p>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__day">день 1–2</span>
+            <h3>Бесплатный концепт</h3>
+            <p>Делаю первый экран вашего будущего сайта — с&nbsp;вашим названием и&nbsp;в&nbsp;выбранном стиле. Без оплаты и&nbsp;обязательств.</p>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__day">день 3–6</span>
+            <h3>Собираю сайт</h3>
+            <p>Понравился концепт — делаю весь сайт. Визитку — без предоплаты, сайты побольше — после предоплаты 30%.</p>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__day">день 6–8</span>
+            <h3>Правки</h3>
+            <p>Два круга правок уже входят в&nbsp;цену. Доводим до&nbsp;результата, который нравится вам.</p>
+          </li>
+          <li class="step" data-step>
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__day">день 7–10</span>
+            <h3>Оплата и запуск</h3>
+            <p>Вы смотрите готовый сайт по&nbsp;ссылке, оплачиваете — и&nbsp;я подключаю домен. Сайт открыт для всех.</p>
+          </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Преимущества -->
+    <section class="why section">
+      <div class="container">
+        <p class="label" data-reveal>почему вывеска</p>
+        <h2 data-reveal>Просто, быстро и&nbsp;по-честному</h2>
+
+        <div class="bento" data-glow>
+          <article class="tile tile--speed" data-reveal>
+            <p class="tile__label">скорость</p>
+            <p class="tile__big"><span>7</span> дней</p>
+            <p>Визитка — от&nbsp;первого сообщения до&nbsp;запуска. Многостраничный сайт — 2–3 недели.</p>
+          </article>
+          <article class="tile tile--wide" data-reveal>
+            <p class="tile__label">фиксированная цена</p>
+            <h3>Сумма известна до&nbsp;старта</h3>
+            <p>Называю точную цену до&nbsp;начала работы, и&nbsp;она не&nbsp;вырастет посередине проекта.</p>
+          </article>
+          <article class="tile" data-reveal>
+            <p class="tile__label">переписка</p>
+            <h3>Всё в&nbsp;письменном виде</h3>
+            <p>Договорённости, правки и&nbsp;сроки сохраняются. Ничего не&nbsp;теряется.</p>
+          </article>
+          <article class="tile" data-reveal>
+            <p class="tile__label">владение</p>
+            <h3>Сайт ваш</h3>
+            <p>Домен оформляется на&nbsp;вас. Сайт на&nbsp;поддержке можно выкупить в&nbsp;любой момент.</p>
+          </article>
+          <article class="tile tile--wide tile--phone" data-reveal>
+            <div>
+              <p class="tile__label">сначала телефон</p>
+              <h3>Вас ищут со&nbsp;смартфона</h3>
+              <p>Поэтому каждый сайт сначала проектирую под&nbsp;телефон, а&nbsp;потом — под&nbsp;компьютер.</p>
+            </div>
+            <div class="phone" aria-hidden="true">
+              <span class="phone__bar"></span>
+              <span class="phone__hero"></span>
+              <span class="phone__line"></span>
+              <span class="phone__line phone__line--short"></span>
+              <span class="phone__btn"></span>
+            </div>
+          </article>
+          <article class="tile" data-reveal>
+            <p class="tile__label">хостинг</p>
+            <h3>Российский сервер</h3>
+            <p>Сайт быстро открывается по&nbsp;всей России, без VPN и&nbsp;перебоев.</p>
+          </article>
+          <article class="tile" data-reveal>
+            <p class="tile__label">дизайн</p>
+            <h3>Без шаблонов</h3>
+            <p>Дизайн под&nbsp;характер вашего места, а&nbsp;не&nbsp;перекрашенная заготовка.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Вопросы -->
+    <section class="faq section" id="faq">
+      <div class="container faq__inner">
+        <div>
+          <p class="label" data-reveal>вопросы</p>
+          <h2 data-reveal>Коротко о&nbsp;главном</h2>
+        </div>
+        <div class="faq__list" data-reveal>
+          <details>
+            <summary>Почему только переписка, без звонков?</summary>
+            <p>Так надёжнее: все договорённости, правки и&nbsp;сроки остаются в&nbsp;письменном виде, к&nbsp;ним всегда можно вернуться. Пишите в&nbsp;Telegram или на&nbsp;почту в&nbsp;любое время — отвечаю в&nbsp;течение дня.</p>
+          </details>
+          <details>
+            <summary>Что нужно от меня?</summary>
+            <p>Название, логотип (если есть), фото, меню или список услуг, адрес и&nbsp;часы работы. Нет текстов — напишу сам. Нет хороших фото — подскажу, как снять их на&nbsp;телефон.</p>
+          </details>
+          <details>
+            <summary>А если мне не понравится?</summary>
+            <p>Первый экран сайта я делаю бесплатно, до&nbsp;любых оплат. Не&nbsp;понравится — просто разойдёмся. Дальше два круга правок входят в&nbsp;цену.</p>
+          </details>
+          <details>
+            <summary>Чей будет сайт?</summary>
+            <p>Под ключ — полностью ваш с&nbsp;первого дня: файлы, доступы, домен. С&nbsp;поддержкой — домен оформляется на&nbsp;вас, а&nbsp;сам сайт можно выкупить в&nbsp;любой момент.</p>
+          </details>
+          <details>
+            <summary>Как проходит оплата?</summary>
+            <p>Сначала — бесплатный концепт. Визитку делаю без предоплаты: вы платите, когда увидите готовый сайт. Для многостраничных сайтов и&nbsp;сайтов с&nbsp;записью — 30% после одобрения концепта и&nbsp;70% перед запуском. Поддержка — 3&nbsp;500&nbsp;₽ в&nbsp;месяц или 35&nbsp;000&nbsp;₽ за&nbsp;год.</p>
+          </details>
+          <details>
+            <summary>Можно начать с визитки, а потом расширить?</summary>
+            <p>Да. Сайт можно развивать: добавить страницы, онлайн-запись или каталог. Платите только за&nbsp;новое.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Финал: ЗАКРЫТО → ОТКРЫТО -->
+    <section class="open" id="contacts" data-open>
+      <div class="open__glow" aria-hidden="true"></div>
+      <div class="door-sign" data-door aria-hidden="true">
+        <span class="door-sign__string"></span>
+        <div class="door-sign__card" data-door-card>
+          <div class="door-sign__face door-sign__face--closed">Закрыто</div>
+          <div class="door-sign__face door-sign__face--open">Открыто</div>
+        </div>
+      </div>
+      <h2 class="open__title">Откроем ваш бизнес для&nbsp;интернета</h2>
+      <p class="open__lead">Пройдите подбор за&nbsp;2&nbsp;минуты — и&nbsp;я бесплатно сделаю первый экран вашего будущего сайта. Без предоплаты и&nbsp;обязательств.</p>
+      <div class="open__actions">
+        <button type="button" class="btn btn--neon" data-magnetic data-brief-open>Подобрать сайт</button>
+        <a href="https://t.me/" class="btn btn--ghost" target="_blank" rel="noopener">Telegram</a>
+      </div>
+      <p class="open__note">Работаю в переписке — так все договорённости остаются у вас перед глазами.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span class="logo logo--small"><span class="logo__mark">В</span><span class="logo__word">Вывеска</span></span>
+    <span>Сайты для малого бизнеса · 2026</span>
+    <span class="footer__links">
+      <a href="https://t.me/" target="_blank" rel="noopener">Telegram</a>
+      <a href="politika.html">Политика конфиденциальности</a>
+    </span>
+  </footer>
+
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="brief.js" defer></script>
+</body>
+</html>
