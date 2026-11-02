@@ -129,7 +129,7 @@
       anatomy.style.setProperty('--callout-w', m === 'mob' ? `${(innerWidth - 56) / 2}px` : '260px');
       poster.src = `seq/${m}/0001.webp`;
       player = new SeqPlayer(canvas, {
-        frames: N,
+        frames: window.SEQ.images || N,   // картинок может быть больше, чем кадров истории — плавнее
         src: (i) => `seq/${m}/${String(i).padStart(4, '0')}.webp`,
         frameWidth: m === 'desk' ? 1920 : 1080,
         frameHeight: m === 'desk' ? 1080 : 1920,

@@ -8,7 +8,7 @@
 ## Структура
 - `index.html` — вся страница, тексты, цены, SEO (title, description, Open Graph, schema.org `Bakery`).
 - `css/style.css` — стили. Цвета в начале файла (`--cocoa-*`, `--cream-*`, `--gold`).
-- `seq/desk/`, `seq/mob/` — 200 кадров первого экрана (WebP), отрисованы в Blender: торт вращается, на боку пишется
+- `seq/desk/`, `seq/mob/` — 300 кадров первого экрана (WebP), отрисованы в Blender: торт вращается, на боку пишется
   «Торты на заказ», нож отрезает кусок, кусок выплывает, ягоды разлетаются в невесомости. `desk` — 1920×1080, `mob` — 1080×1920.
 - `js/seq-player.js` — проигрыватель кадров на canvas: прокрутка → номер кадра, загрузка от грубого к точному.
 - `js/seq-data.js` — сгенерирован из сцены: раскадровка и экранные точки для подписей слоёв (не править руками).
@@ -29,9 +29,9 @@
 Исходники — `3d/ganash-cake/` в корне проекта: `build.py` собирает сцену (торт, крошка, свет, стол), `anim.py` — анимация,
 `knife.py`, `berries.py` — модели ножа и ягод. Перерисовать кадры:
 1. `blender -b --factory-startup -P build.py` → `cake.blend` и `timeline.json`;
-2. `blender -b -P render_frames.py -- --cam desk --frames 1-200 --res 100 --samples 96 --motion-blur 1 --outdir OUT` (и `--cam mob`);
-3. `python encode_seq.py OUT seq/desk 1920 1080 80 desk_` (для `mob` — 1080 1920);
-4. `python export_site_data.py` → `js/seq-data.js`.
+2. `blender -b -P render_frames.py -- --cam desk --frames 1-300 --stretch 300 --res 100 --samples 96 --motion-blur 1 --outdir OUT` (и `--cam mob`);
+3. `python encode_seq.py OUT seq/desk 1920 1080 76 desk_` (для `mob` — 1080 1920, качество 72);
+4. `python export_site_data.py 300` → `js/seq-data.js` (история сцены — 200 кадров, картинок — 300: `--stretch` растягивает её для плавности).
 
 ## Карта
 OpenStreetMap в iframe, тонированная под палитру (у виджета Яндекса на телефоне показывалась реклама).

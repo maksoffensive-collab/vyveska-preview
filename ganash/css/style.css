@@ -158,7 +158,7 @@ a { color: inherit; }
 .menu-open .burger span:last-child { top: 21.5px; transform: rotate(-45deg); }
 
 /* ---------- 1. первый экран: кадры из Blender по прокрутке ---------- */
-.hero { position: relative; height: 560vh; background: #0d0907; }
+.hero { position: relative; height: 620vh; background: #0d0907; }
 .hero__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; isolation: isolate; background: #0d0907; }
 .hero__poster, .hero__seq { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .hero__poster { z-index: 0; object-fit: cover; }
