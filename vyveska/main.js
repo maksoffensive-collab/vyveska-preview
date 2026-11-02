@@ -170,10 +170,12 @@
     gsap.fromTo(words, { opacity: 0.12 }, {
       opacity: 1, stagger: 0.1, ease: 'none',
       scrollTrigger: {
+        // экран «стоит», пока слова проявляются, — и на телефоне тоже
         trigger: '[data-manifest]',
-        start: desktop ? 'top top' : 'top 75%',
-        end: desktop ? '+=140%' : 'bottom 45%',
-        pin: desktop,
+        start: 'top top',
+        end: desktop ? '+=140%' : '+=110%',
+        pin: true,
+        anticipatePin: 1,
         scrub: true,
         onUpdate: (self) => alarm.classList.toggle('is-lit', self.progress >= alarmAt * 0.98),
       },

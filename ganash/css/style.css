@@ -116,14 +116,20 @@ a { color: inherit; }
   display: flex; align-items: center; gap: 36px;
   padding: 22px var(--pad);
   color: var(--cream-100);
-  transition: background-color 0.5s, color 0.4s, padding 0.4s, box-shadow 0.5s, backdrop-filter 0.5s;
+  transition: background-color 0.5s, color 0.4s, padding 0.4s, box-shadow 0.5s;
+}
+/* Размытие — на подложке, а не на самой шапке: backdrop-filter у шапки делает её «рамкой» для
+   position: fixed внутри, и меню на телефоне сперва открывалось полоской в шапке, а потом вниз. */
+.header::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  transition: -webkit-backdrop-filter 0.5s, backdrop-filter 0.5s;
 }
 .header.is-scrolled {
   padding-top: 13px; padding-bottom: 13px;
   background: rgba(19, 14, 12, 0.74);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
   box-shadow: 0 1px 0 var(--line-dark);
 }
+.header.is-scrolled::before { -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
 .header.is-light { color: var(--ink); }
 .header.is-light.is-scrolled { background: rgba(242, 235, 225, 0.8); box-shadow: 0 1px 0 var(--line-light); }
 .header.is-light .btn--line { border-color: rgba(42, 30, 24, 0.28); }
@@ -450,7 +456,8 @@ html:not(.js) .anatomy, html:not(.js) .hero__caption, html:not(.js) .hero__hint,
   .nav a:not(.btn)::after { display: none; }
   .nav__cta { display: inline-flex; margin-top: 28px; }
   .menu-open .nav { opacity: 1; visibility: visible; }
-  .menu-open .header { color: var(--cream-100); background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .menu-open .header { color: var(--cream-100); background: transparent; box-shadow: none; }
+  .menu-open .header::before { -webkit-backdrop-filter: none; backdrop-filter: none; }
   .burger { display: block; }
   .header__cta { display: none; }
   .about__grid, .contacts__grid { grid-template-columns: 1fr; }
