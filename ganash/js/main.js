@@ -131,8 +131,8 @@
       player = new SeqPlayer(canvas, {
         frames: window.SEQ.images || N,   // картинок может быть больше, чем кадров истории — плавнее
         src: (i) => `seq/${m}/${String(i).padStart(4, '0')}.webp`,
-        frameWidth: m === 'desk' ? 1920 : 1080,
-        frameHeight: m === 'desk' ? 1080 : 1920,
+        frameWidth: m === 'desk' ? 1600 : 720,
+        frameHeight: m === 'desk' ? 900 : 1280,
         background: '#0d0907',
         onFirstFrame: () => html.classList.add('seq-ready'),
         onProgress: (loaded, total, failed) => {

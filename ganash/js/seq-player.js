@@ -10,7 +10,7 @@
      fit: 'cover',              // 'cover' — заполнить холст с обрезкой, 'contain' — вписать целиком
      focus: { x: 0.5, y: 0.5 }, // точка кадра, которую держим в центре при обрезке; можно (progress) => ({x, y})
      maxDpr: 2,                 // предел плотности пикселей холста
-     concurrency: 6,            // одновременных загрузок
+     concurrency: 10,           // одновременных загрузок (HTTP/2 — задержка на файл важнее скорости канала)
      background: '#130e0c',     // фон до первого кадра и поля в 'contain'; null — прозрачный холст
      crossfade: true,           // смешивать соседние кадры (по умолчанию выкл. при prefers-reduced-motion)
      preDecode: 4,              // сколько кадров впереди декодировать заранее
@@ -32,30 +32,32 @@
 
   const IDLE = 0, LOADING = 1, LOADED = 2, FAILED = 3; // загрузка кадра
   const DECODING = 1, DECODED = 2;                     // декодирование (0 — не начато / отметка снята)
-  const AHEAD = 8, BEHIND = 2;                         // окно приоритетной загрузки вокруг текущего кадра
+  const AHEAD = 8, BEHIND = 2;                         // окно приоритетной загрузки вокруг текущего кадра (в шагах прохода)
+  const GAP = 8;                                       // смешиваем загруженные кадры не дальше друг от друга
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   // Положение кадра по одной оси: фокус — в центр холста, но без пустых полей;
   // если кадр меньше холста ('contain') — по центру.
   const place = (c, d, f) => (d <= c ? (c - d) / 2 : clamp(c / 2 - f * d, c - d, 0));
 
   // Фоновый порядок «от грубого к точному»: 1-й кадр, каждый 32-й (и последний), 16-й, 8-й, 4-й, 2-й,
-  // затем все — прокрутка показывает похожий кадр задолго до полной загрузки.
+  // затем все — прокрутка показывает похожий кадр задолго до полной загрузки. steps[j] — шаг прохода,
+  // к которому относится order[j].
   const coarseToFine = (n) => {
-    const order = [], seen = new Uint8Array(n);
-    const add = (i) => { if (!seen[i]) { seen[i] = 1; order.push(i); } };
-    add(0);
+    const order = [], steps = [], seen = new Uint8Array(n);
+    const add = (i, s) => { if (!seen[i]) { seen[i] = 1; order.push(i); steps.push(s); } };
+    add(0, 32);
     for (let step = 32; step >= 1; step >>= 1) {
-      for (let i = 0; i < n; i += step) add(i);
-      add(n - 1);
+      for (let i = 0; i < n; i += step) add(i, step);
+      add(n - 1, step);
     }
-    return order;
+    return { order, steps };
   };
 
   class SeqPlayer {
     constructor(canvas, opts) {
       const o = this.opts = Object.assign({
         frames: 1, frameWidth: 1920, frameHeight: 1080, fit: 'cover', focus: { x: 0.5, y: 0.5 },
-        maxDpr: 2, concurrency: 6, background: '#130e0c', preDecode: 4,
+        maxDpr: 2, concurrency: 10, background: '#130e0c', preDecode: 4,
       }, opts);
       if (typeof o.src !== 'function') throw new TypeError('SeqPlayer: нужен opts.src(i)');
       if (o.crossfade === undefined) {
@@ -71,8 +73,9 @@
       this._state = new Uint8Array(n);   // IDLE / LOADING / LOADED / FAILED
       this._dec = new Uint8Array(n);     // 0 / DECODING / DECODED
       this._decList = [];                // кадры с ненулевым _dec (их немного — окно вокруг позиции)
-      this._order = coarseToFine(n);
+      ({ order: this._order, steps: this._steps } = coarseToFine(n));
       this._orderAt = 0;
+      this._step = 1;                    // шаг текущего прохода загрузки
       this.loaded = 0;
       this._failed = 0;
       this._active = 0;                  // загрузок в работе
@@ -168,28 +171,31 @@
       const limit = this._posterDone ? Math.max(1, this.opts.concurrency | 0) : 1; // сначала только постер
       for (;;) {
         const k = this._next();
-        // два соседа текущей позиции — срочные: после прыжка не ждут, пока докачаются дальние кадры,
-        // а занимают до двух слотов сверх лимита (и получают высокий приоритет загрузки)
-        const urgent = this._moved && Math.abs(k - this._pos) < 1;
+        // два соседа текущей позиции в текущем проходе — срочные: после прыжка не ждут, пока докачаются
+        // дальние кадры, а занимают до двух слотов сверх лимита (и получают высокий приоритет загрузки)
+        const urgent = this._moved && Math.abs(k - this._pos) < this._step;
         if (k < 0 || this._active >= limit + (urgent ? 2 : 0)) return;
         this._load(k, urgent);
       }
     }
 
-    // Следующий кадр для загрузки: сперва ближайшие к позиции (больше — по ходу прокрутки),
-    // потом фоновый порядок «от грубого к точному».
+    // Следующий кадр для загрузки — в порядке «от грубого к точному», но внутри текущего прохода сперва
+    // кадры у позиции (больше — по ходу прокрутки): у зрителя кадры густеют раньше, чем везде, и прокрутка
+    // не упирается в непрерывную докачку подряд, пока дальше по ходу кадров нет вовсе.
     _next() {
       const n = this._n, st = this._state;
+      while (this._orderAt < n && st[this._order[this._orderAt]] !== IDLE) this._orderAt++;
+      if (this._orderAt >= n) return -1;
+      const s = this._step = this._steps[this._orderAt];
       if (this._moved) {
-        const c = Math.round(this._pos), dir = this._dir;
+        const c = Math.round(this._pos / s) * s, dir = this._dir;
         for (let d = 0; d <= AHEAD; d++) {
-          const a = c + d * dir, b = c - d * dir;
+          const a = c + d * s * dir, b = c - d * s * dir;
           if (a >= 0 && a < n && st[a] === IDLE) return a;
           if (d && d <= BEHIND && b >= 0 && b < n && st[b] === IDLE) return b;
         }
       }
-      while (this._orderAt < n && st[this._order[this._orderAt]] !== IDLE) this._orderAt++;
-      return this._orderAt < n ? this._order[this._orderAt] : -1;
+      return this._order[this._orderAt];
     }
 
     _load(k, urgent) {
@@ -255,6 +261,14 @@
       });
     }
 
+    // Первый загруженный кадр от from в сторону step (±1) не дальше GAP кадров; −1 — такого нет.
+    _scan(from, step) {
+      for (let k = from, d = 0; d <= GAP && k >= 0 && k < this._n; k += step, d++) {
+        if (this._state[k] === LOADED) return k;
+      }
+      return -1;
+    }
+
     // Ближайший к кадру t кадр, у которого arr[i] === val; при равенстве — в сторону s (±1).
     _nearest(t, s, arr, val) {
       const n = this._n;
@@ -292,13 +306,18 @@
       if (!L) return;
       const n = this._n, pos = this._pos, dec = this._dec;
       const i0 = Math.min(Math.floor(pos), n - 1), i1 = Math.min(i0 + 1, n - 1);
-      let q = i1 > i0 ? Math.round((pos - i0) * 255) : 0; // вес второго кадра, 0…255
-      const t = q < 128 ? i0 : i1, s = q < 128 ? 1 : -1;   // ближайший к позиции кадр и «вторая» сторона
-      const want = this._nearest(t, s, this._state, LOADED); // нужного кадра нет — ближайший загруженный
-      this._decodeAround(i0, i1, want);
+      // Загруженные кадры по обе стороны от позиции. Пока промежуточные докачиваются, смешиваем
+      // ближайшие загруженные — прокрутка плавная задолго до полной загрузки.
+      let lo = this._scan(i0, -1), hi = i1 > i0 ? this._scan(i1, 1) : -1;
+      if (lo < 0 || hi < 0 || hi - lo > GAP) lo = hi = -1;
+      let q = lo >= 0 ? Math.round((pos - lo) / (hi - lo) * 255) : 0; // вес второго кадра, 0…255
+      const t = Math.round(pos), s = pos >= t ? 1 : -1;     // ближайший к позиции кадр и «вторая» сторона
+      // нужного кадра нет — ближайший загруженный
+      const want = lo >= 0 ? (q < 128 ? lo : hi) : this._nearest(t, s, this._state, LOADED);
+      this._decodeAround(lo >= 0 ? lo : i0, lo >= 0 ? hi : i1, want);
       let a = want, b = -1;
-      if (this.opts.crossfade && q > 0 && q < 255 && dec[i0] === DECODED && dec[i1] === DECODED) {
-        a = i0; b = i1; // оба соседа готовы — смешиваем
+      if (this.opts.crossfade && q > 0 && q < 255 && dec[lo] === DECODED && dec[hi] === DECODED) {
+        a = lo; b = hi; // оба соседа готовы — смешиваем
       } else {
         // want ещё декодируется в фоне — пока рисуем ближайший готовый (обычно тот, что уже на экране)
         if (a >= 0 && dec[a] !== DECODED) a = this._nearest(t, s, dec, DECODED);
