@@ -23,7 +23,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+/* плавная прокрутка к якорям — в main.js: CSS scroll-behavior: smooth ломает пересчёт ScrollTrigger */
 
 body {
   margin: 0;

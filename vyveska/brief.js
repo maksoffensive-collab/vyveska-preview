@@ -78,6 +78,22 @@
   const controls = root.querySelector('.brief__controls');
   const bar = root.querySelector('.brief__progress span');
 
+  // У самого низа страницы кнопка не наезжает на подвал (ссылка на политику) — останавливается над ним.
+  // Свойство translate, а не transform: transform занят анимациями кнопки.
+  const footer = document.querySelector('.footer');
+  if (footer) {
+    let raf = 0;
+    const lift = () => {
+      raf = 0;
+      const over = innerHeight - footer.getBoundingClientRect().top;
+      launcher.style.translate = over > 0 ? `0 ${-Math.round(over)}px` : '';
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(lift); };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    lift();
+  }
+
   /* ---------- Помощники ---------- */
   let session = 0;
   let answers = {};

@@ -146,7 +146,8 @@
 
     // ----- подписи слоёв (второе действие)
     const layoutCallouts = (f, t) => {
-      const W = canvas.clientWidth, Hh = canvas.clientHeight;
+      // видимая высота: пока панель браузера видна, она закрывает низ сцены (сцена — во всё «большое» окно)
+      const W = canvas.clientWidth, Hh = Math.min(canvas.clientHeight, innerHeight);
       const pts = {};
       for (const key of ORDER) {
         const a = anchorAt(key, f);
@@ -263,7 +264,7 @@
     let target = 0, cur = 0, raf = 0, last = 0;
     const read = () => {
       const r = hero.getBoundingClientRect();
-      const total = hero.offsetHeight - innerHeight;
+      const total = hero.offsetHeight - canvas.clientHeight;   // столько сцена «прилипает»
       target = total > 0 ? clamp(-r.top / total) : 0;
     };
     const tick = (now) => {

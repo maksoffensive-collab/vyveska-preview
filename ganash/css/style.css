@@ -159,7 +159,11 @@ a { color: inherit; }
 
 /* ---------- 1. первый экран: кадры из Blender по прокрутке ---------- */
 .hero { position: relative; height: 620vh; background: #0d0907; }
-.hero__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; isolation: isolate; background: #0d0907; }
+/* Высота — «большое» окно (100vh на телефоне — без панели браузера): когда панель с адресом уезжает,
+   кадр уже на месте, без тёмной полосы снизу. Пока панель видна, она закрывает низ сцены на --bar —
+   на столько подняты подписи у нижнего края. */
+.hero__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; isolation: isolate; background: #0d0907; --bar: 0px; }
+@supports (height: 100dvh) { .hero__stage { --bar: calc(100lvh - 100dvh); } }
 .hero__poster, .hero__seq { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .hero__poster { z-index: 0; object-fit: cover; }
 .hero__seq { z-index: 1; }
@@ -173,22 +177,23 @@ a { color: inherit; }
   content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background: var(--grain); opacity: 0.045; mix-blend-mode: overlay;
 }
-.hero__brand { position: absolute; z-index: 3; left: 0; right: 0; bottom: calc(6.5vh + env(safe-area-inset-bottom)); text-align: center; pointer-events: none; }
+.hero__brand { position: absolute; z-index: 3; left: 0; right: 0; bottom: calc(6.5vh + env(safe-area-inset-bottom) + var(--bar)); text-align: center; pointer-events: none; }
 .hero__h1 { margin: 0; font: 600 12px/1.5 var(--sans); letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-2); }
 .hero__h1 span { color: rgba(242, 235, 225, 0.7); }
 .hero__h1 i { font-style: normal; }
 .hero__hint {
-  position: absolute; z-index: 3; left: 50%; bottom: calc(34px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+  position: absolute; z-index: 3; left: 50%; bottom: calc(34px + env(safe-area-inset-bottom) + var(--bar)); transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 12px;
   font-size: 10.5px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(242, 235, 225, 0.55);
 }
 .hero__hint i { position: relative; width: 1px; height: 44px; overflow: hidden; background: rgba(201, 164, 108, 0.22); }
+/* бегущий отрезок — через transform: анимация на видеокарте не дёргается, пока грузятся кадры */
 .hero__hint i::after {
-  content: ''; position: absolute; left: 0; top: -40%; width: 1px; height: 40%;
-  background: var(--gold-2); animation: hint 2.2s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  content: ''; position: absolute; left: 0; top: 0; width: 1px; height: 40%; transform: translateY(-100%);
+  background: var(--gold-2); animation: hint 2.2s cubic-bezier(0.6, 0, 0.4, 1) infinite; will-change: transform;
 }
-@keyframes hint { to { top: 100%; } }
-.hero__loader { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(201, 164, 108, 0.12); transition: opacity 0.8s ease 0.6s; }
+@keyframes hint { to { transform: translateY(250%); } }
+.hero__loader { position: absolute; z-index: 3; left: 0; right: 0; bottom: var(--bar); height: 2px; background: rgba(201, 164, 108, 0.12); transition: opacity 0.8s ease 0.6s; }
 .hero__loader i { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(201, 164, 108, 0.2), var(--gold)); transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.4s ease; }
 .hero__loader:has(i.is-done) { opacity: 0; }
 
@@ -265,7 +270,8 @@ html:not(.js) .anatomy, html:not(.js) .hero__caption, html:not(.js) .hero__hint,
 .work--big { grid-row: span 2; }
 .work img { width: 100%; height: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 1.4s var(--ease); }
 .work--big img { aspect-ratio: auto; }
-.work:hover img { transform: scale(1.045); }
+/* наведение — только с мышью: на телефоне касание включает :hover, и карточка резко дёргается */
+@media (hover: hover) { .work:hover img { transform: scale(1.045); } }
 .work figcaption {
   position: absolute; left: 14px; bottom: 14px;
   display: flex; flex-direction: column; gap: 3px;
@@ -277,7 +283,7 @@ html:not(.js) .anatomy, html:not(.js) .hero__caption, html:not(.js) .hero__hint,
 }
 .work figcaption b { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 20px; line-height: 1.05; }
 .work figcaption span { font-size: 11.5px; letter-spacing: 0.03em; color: var(--ink-2); }
-.work:hover figcaption { transform: translateY(-4px); }
+@media (hover: hover) { .work:hover figcaption { transform: translateY(-4px); } }
 .works__more { margin-top: 36px; }
 
 /* ---------- 3. начинки ---------- */
@@ -309,7 +315,7 @@ html:not(.js) .anatomy, html:not(.js) .hero__caption, html:not(.js) .hero__hint,
   content: ''; position: absolute; inset: 0;
   background: linear-gradient(115deg, rgba(255, 255, 255, 0.18), transparent 40%, transparent 70%, rgba(0, 0, 0, 0.18));
 }
-.filling:hover .filling__cut { transform: translateY(-4px) rotate(-3deg); }
+@media (hover: hover) { .filling:hover .filling__cut { transform: translateY(-4px) rotate(-3deg); } }
 .filling h3 { margin: 0 0 8px; font-family: var(--serif); font-weight: 500; font-size: 26px; line-height: 1.08; }
 .filling__body p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted-dark); }
 .filling__price { margin: 18px 0 0; font-family: var(--serif); font-size: 25px; line-height: 1; color: var(--gold-2); }
@@ -324,7 +330,7 @@ html:not(.js) .anatomy, html:not(.js) .hero__caption, html:not(.js) .hero__hint,
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0));
   transition: border-color 0.4s, transform 0.5s var(--ease);
 }
-.format:hover { border-color: rgba(201, 164, 108, 0.45); transform: translateY(-3px); }
+@media (hover: hover) { .format:hover { border-color: rgba(201, 164, 108, 0.45); transform: translateY(-3px); } }
 .format__name { margin: 0; font-family: var(--serif); font-size: 27px; line-height: 1.1; }
 .format__meta { margin: 6px 0 0; font-size: 13px; color: var(--muted-dark); }
 .format__price { margin: 26px 0 0; font-family: var(--serif); font-size: 36px; line-height: 1; color: var(--gold-2); }
@@ -482,11 +488,11 @@ html:not(.js) .anatomy, html:not(.js) .hero__caption, html:not(.js) .hero__hint,
   .hero__shade {
     background: linear-gradient(to bottom, rgba(13, 9, 7, 0.5) 0, rgba(13, 9, 7, 0) 14%, rgba(13, 9, 7, 0) 50%, rgba(19, 14, 12, 0.72) 72%, rgba(19, 14, 12, 0.9) 88%, #130e0c 100%);
   }
-  .hero__brand { bottom: calc(13vh + env(safe-area-inset-bottom)); padding: 0 var(--pad); }
+  .hero__brand { bottom: calc(13vh + env(safe-area-inset-bottom) + var(--bar)); padding: 0 var(--pad); }
   .hero__h1 { font-size: 10.5px; letter-spacing: 0.24em; }
   .hero__h1 span { display: block; margin-top: 6px; }
   .hero__h1 i { display: none; }
-  .hero__caption { left: var(--pad); right: var(--pad); top: auto; bottom: calc(3.5vh + env(safe-area-inset-bottom)); transform: none; width: auto; }
+  .hero__caption { left: var(--pad); right: var(--pad); top: auto; bottom: calc(3.5vh + env(safe-area-inset-bottom) + var(--bar)); transform: none; width: auto; }
   .hero__caption-title { font-size: clamp(32px, 9vw, 44px); }
   .hero__caption-text { margin: 10px 0 16px; font-size: 14px; }
   .hero__caption .label { margin-bottom: 8px; }

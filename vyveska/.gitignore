@@ -1,3 +1,0 @@
-api/config.php
-api/data/*
-!api/data/.htaccess

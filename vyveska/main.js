@@ -15,6 +15,19 @@
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* ---------- Плавная прокрутка к якорям меню ---------- */
+  // Не через CSS scroll-behavior: smooth — с ним и прокрутка ScrollTrigger при пересчёте становится
+  // плавной, не успевает, и если страница открыта не в самом верху, все триггеры съезжают.
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    const target = a && document.getElementById(a.getAttribute('href').slice(1));
+    if (!target || e.defaultPrevented) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    history.pushState(null, '', a.getAttribute('href'));
+  });
+
   /* ---------- Переключатель «С поддержкой / Под ключ» ---------- */
   const tiers = $('[data-tiers]');
   const switchBtns = $$('[data-switch] button');
@@ -78,19 +91,30 @@
   const hero = $('[data-hero]');
   tubes.forEach((pair) => setOn(pair, false));
 
-  const intro = gsap.timeline({ delay: 0.5 });
-  tubes.forEach((pair, i) => flicker(intro, pair, i * 0.11 + gsap.utils.random(0, 0.18)));
-  intro
-    .to(hero, { '--lit': 1, duration: 1.6, ease: 'power2.out' }, 0.5)
-    .to('[data-hero-in]', { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out' }, 0.9);
-
-  // Одна «трубка» иногда барахлит — как у настоящей вывески
+  // Одна «трубка» иногда барахлит — как у настоящей вывески (после того, как вывеска загорелась)
   const broken = tubes[5];
   const glitch = () => {
     const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(gsap.utils.random(3, 7), glitch) });
     flicker(tl, broken, 0, [[0, 0], [0.07, 1], [0.12, 0], [0.24, 1]]);
   };
-  gsap.delayedCall(4, glitch);
+
+  const intro = gsap.timeline({ paused: true });
+  tubes.forEach((pair, i) => flicker(intro, pair, i * 0.11 + gsap.utils.random(0, 0.18)));
+  intro
+    .to(hero, { '--lit': 1, duration: 1.6, ease: 'power2.out' }, 0.5)
+    .to('[data-hero-in]', { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out' }, 0.9)
+    .call(() => gsap.delayedCall(1.2, glitch));
+
+  // Вывеска загорается на глазах: при обычном заходе — сразу; если страница открылась ниже (ссылка
+  // с #tiers, обновление посреди страницы) — когда вывеска покажется на экране (см. settle внизу).
+  let lit = false;
+  const playIntro = (delay) => {
+    if (lit) return;
+    lit = true;
+    gsap.delayedCall(delay, () => intro.play());
+  };
+  const navEntry = performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+  if (!location.hash && (!navEntry || navEntry.type === 'navigate') && scrollY < 10) playIntro(0.5);
 
   // Свет за курсором и уход hero при прокрутке
   if (canHover) {
@@ -254,6 +278,28 @@
     });
   }
 
-  // После загрузки шрифтов размеры меняются — пересчитываем триггеры
-  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+  /* ---------- Страница открылась не сверху ---------- */
+  // Браузер докручивает к якорю (#tiers с сайта-примера) или восстанавливает прокрутку после обновления,
+  // пока страница ещё грузится. Когда всё загружено (и шрифты — от них меняются размеры), встаём на якорь
+  // точно (вёрстка могла сдвинуться) и пересчитываем триггеры; вывеску зажигаем, когда её видно.
+  let userScrolled = false;
+  ['wheel', 'touchstart', 'keydown'].forEach((type) =>
+    addEventListener(type, () => { userScrolled = true; }, { once: true, passive: true }));
+  const settle = () => {
+    const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target && !userScrolled) target.scrollIntoView();
+    ScrollTrigger.refresh();
+    if (lit) return;
+    if (hero.getBoundingClientRect().bottom > innerHeight * 0.3) return playIntro(0.2);
+    ScrollTrigger.create({
+      trigger: hero,
+      start: 'top bottom',
+      end: 'bottom 20%',
+      onEnterBack: (self) => { playIntro(0.1); self.kill(); },
+    });
+  };
+  const loaded = document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise((resolve) => addEventListener('load', resolve, { once: true }));
+  Promise.all([loaded, document.fonts && document.fonts.ready]).then(() => requestAnimationFrame(settle));
 })();
