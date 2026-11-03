@@ -1,0 +1,224 @@
+/* Ольха — бронь: шаги «когда → где → кто», календарь, время, схема зала, сводка справа */
+
+body[data-page='bron'] .dock { display: none; }
+body[data-page='bron'] { padding-bottom: 0; }
+
+.booking {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: clamp(32px, 5vw, 96px);
+  align-items: start;
+  padding-bottom: clamp(90px, 11vw, 160px);
+}
+
+/* шаги */
+.steps-nav { display: flex; gap: 8px; margin: 0 0 40px; padding: 0; list-style: none; border-bottom: 1px solid var(--line); }
+.steps-nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px 16px;
+  margin-right: 24px;
+  border: 0;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  position: relative;
+}
+.steps-nav button:disabled { cursor: default; opacity: 0.45; }
+.steps-nav .num {
+  display: grid; place-items: center;
+  width: 26px; height: 26px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 12px; letter-spacing: 0;
+}
+.steps-nav button[aria-current='step'] { color: var(--fg); }
+.steps-nav button[aria-current='step']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); }
+.steps-nav button.is-done .num { background: var(--accent); border-color: var(--accent); color: var(--coal); }
+
+.step { display: grid; gap: 34px; }
+.step[hidden] { display: none; }
+.step__title { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(32px, 3.6vw, 54px); line-height: 1.05; }
+.step__title em { font-style: italic; color: var(--accent); }
+.step__label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.step__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; padding-top: 8px; }
+.step__hint { margin: 0; font-size: 14px; color: var(--muted); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn:disabled::before { display: none; }
+
+/* гости */
+.guests { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); }
+.stepper button {
+  width: 52px; height: 52px;
+  border: 0; background: none; cursor: pointer;
+  font-size: 22px; color: var(--fg);
+  transition: background-color 0.3s;
+}
+.stepper button:hover:not(:disabled) { background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.stepper button:disabled { opacity: 0.3; cursor: default; }
+.stepper output { min-width: 56px; text-align: center; font-family: var(--serif); font-weight: 300; font-size: 30px; font-variant-numeric: tabular-nums; }
+.guests__more { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); text-decoration: none; }
+.guests__more svg { width: 16px; height: 16px; }
+.guests__more:hover { color: var(--fg); }
+
+/* календарь */
+.cal { max-width: 560px; }
+.cal__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.cal__nav { display: flex; align-items: center; gap: 12px; }
+.cal__nav b { min-width: 9em; text-align: center; font-family: var(--serif); font-weight: 300; font-size: 22px; }
+.cal__nav button { width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 50%; background: none; cursor: pointer; font-size: 20px; line-height: 1; }
+.cal__nav button:disabled { opacity: 0.3; cursor: default; }
+.cal__week, .cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal__week span { text-align: center; padding: 6px 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.cal__grid button {
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--fg) 4%, transparent);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+.cal__grid button:hover:not(:disabled) { border-color: var(--accent); }
+.cal__grid button:disabled { background: none; color: color-mix(in srgb, var(--fg) 25%, transparent); cursor: default; }
+.cal__grid button.is-today { box-shadow: inset 0 -2px 0 var(--accent); }
+.cal__grid button[aria-pressed='true'] { background: var(--alder-deep); color: var(--linen); border-color: var(--alder-deep); }
+.cal__grid .cal__pad { visibility: hidden; }
+
+/* время */
+.slots { display: grid; gap: 16px; }
+.slots__group { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 16px; align-items: start; }
+.slots__name { padding-top: 12px; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 20px; color: var(--muted); }
+.slots__list { display: flex; flex-wrap: wrap; gap: 8px; }
+.slots__list button {
+  min-width: 78px;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s, color 0.25s;
+}
+.slots__list button:hover:not(:disabled) { border-color: var(--fg); }
+.slots__list button:disabled { opacity: 0.32; text-decoration: line-through; cursor: default; }
+.slots__list button[aria-pressed='true'] { background: var(--alder-deep); border-color: var(--alder-deep); color: var(--linen); }
+
+/* залы */
+.halls-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.halls-tabs button {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+.halls-tabs button[aria-selected='true'] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+/* схема зала: подложка SVG, столы — настоящие кнопки поверх */
+.plan {
+  position: relative;
+  aspect-ratio: 10 / 7;
+  background: var(--soot);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.plan__svg { position: absolute; inset: 0; width: 100%; height: 100%; color: rgba(239, 230, 214, 0.32); }
+.plan__svg text { fill: rgba(239, 230, 214, 0.55); font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.plan__fire { fill: rgba(226, 125, 70, 0.22); stroke: var(--ember); }
+.table {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(239, 230, 214, 0.55);
+  background: rgba(239, 230, 214, 0.08);
+  color: var(--linen);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(14px, 1.4vw, 20px);
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s, transform 0.4s var(--ease), box-shadow 0.4s;
+}
+.table--round { border-radius: 50%; }
+.table--sq { border-radius: 6px; }
+.table--long { border-radius: 10px; }
+.table small { display: block; margin-top: -4px; font-family: var(--sans); font-size: 10px; letter-spacing: 0.1em; color: rgba(239, 230, 214, 0.6); }
+.table:hover:not(:disabled), .table:focus-visible { border-color: var(--wax); background: rgba(242, 203, 142, 0.16); transform: scale(1.06); }
+.table.is-busy { border-style: dashed; border-color: rgba(239, 230, 214, 0.2); background: none; color: rgba(239, 230, 214, 0.28); cursor: not-allowed; }
+.table.is-small { border-color: rgba(239, 230, 214, 0.2); background: repeating-linear-gradient(45deg, transparent 0 5px, rgba(239, 230, 214, 0.07) 5px 7px); color: rgba(239, 230, 214, 0.4); cursor: not-allowed; }
+.table[aria-pressed='true'] { background: var(--alder-deep); border-color: var(--wax); color: var(--linen); box-shadow: 0 0 0 6px rgba(226, 125, 70, 0.18), 0 0 40px rgba(226, 125, 70, 0.45); }
+.plan__closed {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; gap: 10px;
+  padding: 24px;
+  text-align: center;
+  background: rgba(17, 13, 11, 0.72);
+  color: var(--linen);
+}
+.plan__closed b { font-family: var(--serif); font-weight: 300; font-size: clamp(26px, 3vw, 40px); }
+
+.plan-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: -14px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--muted); }
+.plan-legend li { display: flex; align-items: center; gap: 8px; }
+.plan-legend i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--muted); }
+.plan-legend .is-busy { border-style: dashed; opacity: 0.5; }
+.plan-legend .is-small { background: repeating-linear-gradient(45deg, transparent 0 3px, var(--line) 3px 5px); }
+.plan-legend .is-on { background: var(--alder-deep); border-color: var(--wax); }
+.plan-info { margin: 0; min-height: 1.6em; font-family: var(--serif); font-weight: 300; font-size: 22px; }
+
+/* повод — фишки */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
+.chips legend { margin-bottom: 10px; padding: 0; }
+.chips label { cursor: pointer; }
+.chips input { position: absolute; opacity: 0; pointer-events: none; }
+.chips span { display: inline-flex; align-items: center; min-height: 42px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px; font-size: 15px; transition: background-color 0.25s, color 0.25s, border-color 0.25s; }
+.chips input:checked + span { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.chips input:focus-visible + span { outline: 2px solid var(--wax); outline-offset: 2px; }
+
+/* готово */
+.step--done { justify-items: start; }
+.done-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; }
+.done-demo { display: grid; gap: 18px; justify-items: start; padding-top: 24px; border-top: 1px solid var(--line); width: 100%; }
+.done-demo[hidden] { display: none; }
+
+/* сводка */
+.summary { position: sticky; top: calc(var(--header-h) + 24px); background: var(--soot); border: 1px solid var(--line); }
+.summary__photo { aspect-ratio: 3 / 2; }
+.summary__photo img { transition: opacity 0.4s; }
+.summary__body { display: grid; gap: 18px; padding: 24px 26px 28px; }
+.summary__list { display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; margin: 0; }
+.summary__list dt { padding-top: 4px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.summary__list dd { margin: 0; font-family: var(--serif); font-weight: 300; font-size: 21px; line-height: 1.25; }
+.summary__note { margin: 0; font-size: 14px; color: var(--muted); }
+
+@media (max-width: 1000px) {
+  .booking { grid-template-columns: 1fr; }
+  .summary { position: static; order: -1; display: grid; grid-template-columns: 120px 1fr; }
+  .summary__photo { aspect-ratio: auto; height: 100%; }
+  .summary__body { padding: 16px 18px; gap: 10px; }
+  .summary__list dd { font-size: 18px; }
+  .summary__note { display: none; }
+}
+@media (max-width: 600px) {
+  .summary { grid-template-columns: 1fr; }
+  .summary__photo { display: none; }
+  .steps-nav button { margin-right: 6px; font-size: 12px; letter-spacing: 0.1em; }
+  .slots__group { grid-template-columns: 1fr; gap: 8px; }
+  .slots__name { padding-top: 0; }
+  .slots__list button { min-width: 0; flex: 1 0 calc(25% - 8px); padding: 0 6px; }
+  .cal__grid button { font-size: 17px; }
+  .plan { aspect-ratio: 10 / 8; }
+  .table small { display: none; }
+  .plan-info { font-size: 19px; }
+}

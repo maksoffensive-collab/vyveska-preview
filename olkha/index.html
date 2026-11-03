@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>«Ольха» — ресторан живого огня</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="film-test/film.css">
+</head>
+<body>
+  <canvas id="stage" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" id="grain" aria-hidden="true"></div>
+  <div class="fade" id="fade" aria-hidden="true"></div>
+  <div class="caps" id="caps"></div>
+
+  <header class="hud">
+    <a class="hud__logo" href="index.html" title="В начало">Ольха</a>
+        <span class="hud__clock" id="clock" title="Время вечера">18:00</span>
+  </header>
+
+  <section class="panel" id="menu" aria-label="Меню">
+    <p class="kicker">Меню · ужин</p>
+    <h2 class="panel__title">Что вам принести?</h2>
+    <div class="tabs" id="menu-tabs" role="tablist"></div>
+    <ul class="dishes" id="menu-list"></ul>
+    <p class="panel__hint">Нажмите на блюдо — покажем состав и цену. Листайте дальше — посмотрим, как готовят десерт.</p>
+  </section>
+
+  <section class="panel" id="book" aria-label="Бронь стола">
+    <p class="kicker">Вместо счёта — приглашение</p>
+    <h2 class="panel__title">Когда вас ждать снова?</h2>
+    <div class="book__row">
+      <label>Дата<select id="b-date"></select></label>
+      <label>Время<select id="b-time"></select></label>
+      <label>Гостей<select id="b-guests"></select></label>
+    </div>
+    <a class="btn" id="b-go" href="bron.html">Выбрать стол</a>
+    <p class="panel__hint">Дальше — схема зала и выбор стола на странице брони.</p>
+  </section>
+
+  <section class="end" id="end" aria-label="Контакты">
+    <p class="end__logo">Ольха</p>
+    <p class="end__line">Москва, Ольховская улица · 7 минут пешком от «Бауманской»</p>
+    <p class="end__line">Обеды 12:00–16:00 · ужины 18:00–00:00, пт–сб до 02:00 · +7 (495) 000-00-00</p>
+    <nav class="end__nav" aria-label="Разделы"><a href="menu.html">Меню</a><a href="zaly.html">Залы</a><a href="sobytiya.html">События</a><a href="kontakty.html">Контакты</a></nav>
+    <div class="end__btns"><a class="btn" href="bron.html">Забронировать стол</a><button class="btn btn--ghost" id="again" type="button">Посмотреть сначала</button></div>
+  </section>
+
+  <footer class="foot">
+    <p class="foot__scene" id="scene"></p>
+    <button class="foot__notes" id="notes-btn" type="button" aria-expanded="false" aria-controls="notes">Пояснения</button>
+    <nav class="prog" id="prog" aria-label="Сцены"></nav>
+  </footer>
+  <aside class="notes" id="notes" aria-label="Что будет в финале"></aside>
+
+  <div class="hint" id="hint" aria-hidden="true"><span>Листайте</span><i></i></div>
+  <div class="loader" id="loader"><span>Ольха</span></div>
+  <div class="scroller" id="scroller"></div>
+
+  <script src="film-test/story.js"></script>
+  <script src="film/film-data.js"></script>
+  <script src="film/seq-player.js"></script>
+  <script src="film/film.js"></script>
+</body>
+</html>
