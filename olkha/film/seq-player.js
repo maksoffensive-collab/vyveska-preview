@@ -71,6 +71,7 @@
       const n = this._n = Math.max(1, o.frames | 0);
       this._imgs = new Array(n);
       this._state = new Uint8Array(n);   // IDLE / LOADING / LOADED / FAILED
+      this._tries = new Uint8Array(n);   // повторы после сбоя загрузки
       this._dec = new Uint8Array(n);     // 0 / DECODING / DECODED
       this._decList = [];                // кадры с ненулевым _dec (их немного — окно вокруг позиции)
       ({ order: this._order, steps: this._steps } = coarseToFine(n));
@@ -211,6 +212,10 @@
         this._active--;
         this._posterDone = true;
         if (ok) { this._state[k] = LOADED; this.loaded++; }
+        else if (this._tries[k] < 2) { // сбой сети или 503 у хостинга: ещё две попытки с паузой, кадр пока «в загрузке»
+          this._imgs[k] = null;
+          setTimeout(() => { if (!this._destroyed) this._load(k, false); }, 1500 * ++this._tries[k]);
+        }
         else { this._state[k] = FAILED; this._imgs[k] = null; this._failed++; } // 404 и т. п.: рисуем соседей
         this._pump();
         if (ok) this._schedule(); // новый кадр может оказаться ближе к нужному
