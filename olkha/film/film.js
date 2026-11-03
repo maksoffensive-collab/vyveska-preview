@@ -15,13 +15,27 @@
 
   // кадры для телефона — вертикальные, для компьютера — горизонтальные (выбираем один раз, по экрану)
   const CAM = innerWidth / innerHeight < 0.9 ? 'mob' : 'desk';
+  // чёрный экран с «Ольхой», пока не загрузится каждый четвёртый кадр по всему фильму (плеер грузит от грубого
+  // к точному, остальное докачает на ходу); прокрутка до этого закрыта, на очень медленной сети ждём не дольше 15 с
+  const READY = Math.ceil(S.frames / 4), root = document.documentElement;
+  let ready = false;
+  const showFilm = () => {
+    if (ready) return;
+    ready = true;
+    $('#loader').classList.add('is-gone');
+    root.classList.remove('is-loading');
+  };
+  root.classList.add('is-loading');
+  setTimeout(showFilm, 15000);
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; // обновление — с начала фильма
   const canvas = $('#stage');
   const player = new SeqPlayer(canvas, {
     frames: S.frames,
     src: (i) => `film/seq/${CAM}/${String(i - 1).padStart(4, '0')}.webp`,
     frameWidth: CAM === 'mob' ? 720 : 1600, frameHeight: CAM === 'mob' ? 1280 : 900,
     fit: 'cover', background: '#0a0706', concurrency: 10,
-    onFirstFrame: () => $('#loader').classList.add('is-gone'),
+    crossfade: true, // смешивание соседних кадров — не лишнее движение, и в режиме «уменьшить движение» тоже
+    onProgress: (loaded, total, failed) => { if (loaded + failed >= READY) showFilm(); },
   });
   // в покадровой сцене соседние снимки не смешиваем — укусы появляются «щелчком»
   const stopK = (t) => { const s = F.STOP; return t < s.range[0] || t >= s.range[1] ? -1 : clamp(Math.floor((t - s.t0) / s.step) + 1, 0, s.frames); };

@@ -143,6 +143,7 @@ button, select { font: inherit; color: inherit; }
 .loader span { font: italic 300 64px/1 var(--serif); animation: breathe 1.6s ease-in-out infinite; }
 @keyframes breathe { 50% { opacity: .35; } }
 .loader.is-gone { opacity: 0; visibility: hidden; }
+.is-loading, .is-loading body { overflow: hidden; }
 
 @media (max-width: 700px) {
   :root { --bar: 50px; }
