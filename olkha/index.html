@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" class="film-video">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +10,10 @@
   <link rel="stylesheet" href="film-test/film.css">
 </head>
 <body>
-  <canvas id="stage" aria-hidden="true"></canvas>
+  <div class="stage" id="stage" aria-hidden="true">
+    <video id="vf" class="is-on" muted playsinline preload="auto" disablepictureinpicture></video>
+    <video id="vr" muted playsinline preload="none" disablepictureinpicture></video>
+  </div>
   <div class="vignette" aria-hidden="true"></div>
   <div class="grain" id="grain" aria-hidden="true"></div>
   <div class="fade" id="fade" aria-hidden="true"></div>
@@ -58,11 +61,9 @@
 
   <div class="hint" id="hint" aria-hidden="true"><span>Листайте</span><i></i></div>
   <div class="loader" id="loader"><span>Ольха</span></div>
-  <div class="scroller" id="scroller"></div>
 
   <script src="film-test/story.js"></script>
   <script src="film/film-data.js"></script>
-  <script src="film/seq-player.js"></script>
   <script src="film/film.js"></script>
 </body>
 </html>

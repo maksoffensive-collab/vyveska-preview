@@ -68,7 +68,7 @@ button, select { font: inherit; color: inherit; }
 .caps { position: fixed; inset: 0; z-index: 10; pointer-events: none; overflow: hidden; }
 .cap { position: absolute; left: 0; top: 0; visibility: hidden; will-change: transform, opacity; }
 .cap__box { position: relative; isolation: isolate; color: var(--linen); text-shadow: 0 1px 14px rgba(0, 0, 0, .75); }
-.cap__box::before { content: ''; position: absolute; inset: -24px -40px; z-index: -1; background: radial-gradient(closest-side, rgba(8, 6, 5, .5), rgba(8, 6, 5, 0)); pointer-events: none; }
+.cap__box::before { content: ''; position: absolute; inset: -24px -40px; z-index: -1; background: radial-gradient(closest-side, rgba(8, 6, 5, .66), rgba(8, 6, 5, 0)); pointer-events: none; }
 .cap__box > b { display: block; font: 300 clamp(20px, 2vw, 30px)/1.15 var(--serif); }
 .cap__box > span:not([class]) { display: block; margin-top: 7px; font: 600 11px/1.45 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--wax); }
 .cap--pin .cap__box { position: absolute; left: 0; top: 0; width: max-content; max-width: min(340px, 62vw); padding: 4px 8px; }
@@ -144,6 +144,13 @@ button, select { font: inherit; color: inherit; }
 @keyframes breathe { 50% { opacity: .35; } }
 .loader.is-gone { opacity: 0; visibility: hidden; }
 .is-loading, .is-loading body { overflow: hidden; }
+/* финальная страница: видео «главами» вместо прокрутки — страница не прокручивается, жесты ловит film.js */
+.film-video, .film-video body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+.film-video body { touch-action: none; }
+.film-video .panel, .film-video .notes, .film-video .end { touch-action: pan-y; }
+.stage { background: #0a0706; }
+.stage video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.stage video.is-on { opacity: 1; }
 
 @media (max-width: 700px) {
   :root { --bar: 50px; }
