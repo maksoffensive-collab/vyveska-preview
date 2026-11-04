@@ -1,6 +1,6 @@
 /* Ольха — бронь в три шага: когда (дата, время, гости) → где (зал и стол на схеме) → кто (контакты).
-   Занятость столов и времени в демо условная: считается от даты и времени, чтобы схема выглядела живой.
-   На сайте клиента её можно брать из таблицы администратора или CRM — формат заявки от этого не меняется. */
+   Это заявка, а не учёт столов: выбранный стол — пожелание гостя, администратор подтверждает его звонком.
+   Недоступно только то, что следует из правил: прошедшее время, стол меньше компании, терраса не в сезон. */
 (() => {
   'use strict';
 
@@ -10,21 +10,24 @@
   const $ = (s) => root.querySelector(s);
   const $$ = (s) => [...root.querySelectorAll(s)];
 
+  // на WordPress картинки лежат в папке темы: <body data-assets="…/assets/">; на статическом сайте — рядом
+  const A = (path) => (document.body.dataset.assets || '') + path;
+
   const MONTHS_NOM = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
   const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-  const LUNCH = ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30'];
-  const DINNER = ['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30'];
+  const times = (sel, def) => { const v = root.querySelector(sel)?.dataset.times; return v ? v.split(',').map((t) => t.trim()).filter(Boolean) : def; };
+  const LUNCH = times('[data-slots-lunch]', ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30']);
+  const DINNER = times('[data-slots-dinner]', ['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30']);
   const DAYS_AHEAD = 60;
 
   const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   const today = new Date(); today.setHours(12, 0, 0, 0);
   const lastDay = new Date(today); lastDay.setDate(lastDay.getDate() + DAYS_AHEAD);
-  const hash = (s) => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
 
   /* ---------- залы: столы в процентах от схемы (10 : 7) ---------- */
   const HALLS = {
     pech: {
-      name: 'Зал у печи', photo: 'img/hall-pech-720.webp',
+      name: 'Зал у печи', photo: A('img/hall-pech-720.webp'),
       svg: `<g fill="none" stroke="currentColor" stroke-width="2"><path d="M10 10H990V690H800M700 690H10V10"/><path d="M860 250h100v350h-100z"/></g>
         <path class="plan__fire" d="M420 10V64Q500 122 580 64V10" stroke-width="2"/>
         <path d="M10 90V190M10 290V390M10 490V590" stroke="rgba(242,203,142,.6)" stroke-width="7"/>
@@ -32,48 +35,56 @@
         <text transform="translate(910 425) rotate(-90)" text-anchor="middle">бар</text>
         <text x="750" y="676" text-anchor="middle">вход</text>`,
       tables: [
-        { id: 1, seats: 2, shape: 'sq', x: 4.2, y: 12, w: 7, h: 10, where: 'у окна', view: 'img/hero-720.webp' },
-        { id: 2, seats: 2, shape: 'sq', x: 4.2, y: 41, w: 7, h: 10, where: 'у окна', view: 'img/hero-720.webp' },
-        { id: 3, seats: 2, shape: 'sq', x: 4.2, y: 70, w: 7, h: 10, where: 'у окна', view: 'img/hero-720.webp' },
-        { id: 4, seats: 4, shape: 'round', x: 24, y: 33, w: 10, h: 14.3, where: 'в центре зала', view: 'img/hall-pech-720.webp' },
-        { id: 5, seats: 4, shape: 'round', x: 44, y: 33, w: 10, h: 14.3, where: 'в центре, напротив печи', view: 'img/oven-600.webp' },
-        { id: 6, seats: 4, shape: 'round', x: 64, y: 33, w: 10, h: 14.3, where: 'в центре зала', view: 'img/hall-pech-720.webp' },
-        { id: 7, seats: 4, shape: 'round', x: 24, y: 64, w: 10, h: 14.3, where: 'в тихой части зала', view: 'img/interior-lamps-720.webp' },
-        { id: 8, seats: 4, shape: 'round', x: 44, y: 64, w: 10, h: 14.3, where: 'в тихой части зала', view: 'img/interior-beams-720.webp' },
-        { id: 9, seats: 6, shape: 'long', x: 21, y: 5, w: 15, h: 11, where: 'у печи', view: 'img/oven-600.webp' },
-        { id: 10, seats: 6, shape: 'long', x: 64, y: 5, w: 15, h: 11, where: 'у печи', view: 'img/grill-600.webp' },
+        { id: 1, seats: 2, shape: 'sq', x: 4.2, y: 12, w: 7, h: 10, where: 'у панорамного окна', view: A('img/cover-720.webp') },
+        { id: 2, seats: 2, shape: 'sq', x: 4.2, y: 41, w: 7, h: 10, where: 'у панорамного окна', view: A('img/cover-720.webp') },
+        { id: 3, seats: 2, shape: 'sq', x: 4.2, y: 70, w: 7, h: 10, where: 'у панорамного окна', view: A('img/cover-720.webp') },
+        { id: 4, seats: 4, shape: 'round', x: 24, y: 33, w: 10, h: 14.3, where: 'в центре зала', view: A('img/hall-pech-720.webp') },
+        { id: 5, seats: 4, shape: 'round', x: 44, y: 33, w: 10, h: 14.3, where: 'в центре, напротив печи', view: A('img/oven-600.webp') },
+        { id: 6, seats: 4, shape: 'round', x: 64, y: 33, w: 10, h: 14.3, where: 'в центре зала', view: A('img/hall-pech-720.webp') },
+        { id: 7, seats: 4, shape: 'round', x: 24, y: 64, w: 10, h: 14.3, where: 'в тихой части зала', view: A('img/interior-lamps-720.webp') },
+        { id: 8, seats: 4, shape: 'round', x: 44, y: 64, w: 10, h: 14.3, where: 'в тихой части зала', view: A('img/interior-beams-720.webp') },
+        { id: 9, seats: 6, shape: 'long', x: 21, y: 5, w: 15, h: 11, where: 'у печи', view: A('img/oven-600.webp') },
+        { id: 10, seats: 6, shape: 'long', x: 64, y: 5, w: 15, h: 11, where: 'у печи', view: A('img/grill-600.webp') },
       ],
     },
     kamin: {
-      name: 'Камин', photo: 'img/hall-kamin-720.webp', minGuests: 6,
+      name: 'Камин', photo: A('img/hall-kamin-720.webp'), minGuests: 6,
       svg: `<g fill="none" stroke="currentColor" stroke-width="2"><path d="M10 10H990V690H180M90 690H10V10"/></g>
         <path class="plan__fire" d="M410 10h180v70H410z" stroke-width="2"/>
         <path d="M990 200V320M990 400V520" stroke="rgba(242,203,142,.6)" stroke-width="7"/>
         <text x="500" y="112" text-anchor="middle">камин</text>
         <text x="135" y="676" text-anchor="middle">вход</text>`,
-      tables: [{ id: 'К', label: 'стол', seats: 12, shape: 'long', x: 20, y: 42, w: 60, h: 16, where: 'длинный стол у камина, весь зал ваш', view: 'img/hall-kamin-720.webp' }],
+      tables: [{ id: 'К', label: 'стол', seats: 12, shape: 'long', x: 20, y: 42, w: 60, h: 16, where: 'длинный стол у камина, весь зал ваш', view: A('img/hall-kamin-720.webp') }],
     },
     chef: {
-      name: 'Шеф-стол', photo: 'img/hall-chefstol-720.webp', setOnly: true,
+      name: 'Шеф-стол', photo: A('img/hall-chefstol-720.webp'), setOnly: true,
       svg: `<g fill="none" stroke="currentColor" stroke-width="2"><path d="M10 10H990V690H10Z"/></g>
         <path d="M60 40h880v240H60z" fill="rgba(226,125,70,.08)" stroke="currentColor" stroke-dasharray="6 6"/>
         <path class="plan__fire" d="M200 90h170v80H200zM630 90h170v80H630z" stroke-width="2"/>
         <text x="500" y="230" text-anchor="middle">открытая кухня · гриль · печь</text>`,
-      tables: [{ id: 'Ш', label: 'стойка', seats: 8, shape: 'long', x: 12, y: 47, w: 76, h: 9, where: 'стойка у открытой кухни', view: 'img/hall-chefstol-720.webp', counter: true }],
+      tables: [{ id: 'Ш', label: 'стойка', seats: 8, shape: 'long', x: 12, y: 47, w: 76, h: 9, where: 'стойка у открытой кухни', view: A('img/hall-chefstol-720.webp'), counter: true }],
     },
     terrasa: {
-      name: 'Терраса', photo: 'img/hall-terrasa-720.webp', season: [5, 9],
+      name: 'Терраса', photo: A('img/hall-terrasa-720.webp'), season: [5, 9],
       svg: `<g fill="none" stroke="currentColor" stroke-width="2"><path d="M10 10H990V690H10Z" stroke-dasharray="10 8"/></g>
         <g fill="rgba(74,82,56,.45)"><circle cx="120" cy="120" r="70"/><circle cx="880" cy="580" r="80"/><circle cx="860" cy="110" r="55"/></g>
         <path d="M60 300Q500 380 940 300M60 500Q500 580 940 500" fill="none" stroke="rgba(242,203,142,.5)" stroke-dasharray="2 14" stroke-width="5" stroke-linecap="round"/>`,
       tables: [
-        { id: 'Т1', seats: 4, shape: 'round', x: 26, y: 18, w: 10, h: 14.3, where: 'под липой', view: 'img/hall-terrasa-720.webp' },
-        { id: 'Т2', seats: 4, shape: 'round', x: 46, y: 18, w: 10, h: 14.3, where: 'в центре террасы', view: 'img/hall-terrasa-720.webp' },
-        { id: 'Т3', seats: 6, shape: 'long', x: 20, y: 60, w: 15, h: 11, where: 'под гирляндами', view: 'img/hall-terrasa-720.webp' },
-        { id: 'Т4', seats: 6, shape: 'long', x: 45, y: 60, w: 15, h: 11, where: 'под гирляндами', view: 'img/hall-terrasa-720.webp' },
+        { id: 'Т1', seats: 4, shape: 'round', x: 26, y: 18, w: 10, h: 14.3, where: 'под липой', view: A('img/hall-terrasa-720.webp') },
+        { id: 'Т2', seats: 4, shape: 'round', x: 46, y: 18, w: 10, h: 14.3, where: 'в центре террасы', view: A('img/hall-terrasa-720.webp') },
+        { id: 'Т3', seats: 6, shape: 'long', x: 20, y: 60, w: 15, h: 11, where: 'под гирляндами', view: A('img/hall-terrasa-720.webp') },
+        { id: 'Т4', seats: 6, shape: 'long', x: 45, y: 60, w: 15, h: 11, where: 'под гирляндами', view: A('img/hall-terrasa-720.webp') },
       ],
     },
   };
+
+  // название и фото зала можно поменять в админке: они приходят в кнопках-вкладках (data-name, data-photo)
+  root.querySelectorAll('[data-hall]').forEach((b) => {
+    const h = HALLS[b.dataset.hall];
+    if (!h) return;
+    if (b.dataset.name) h.name = b.dataset.name;
+    if (b.dataset.photo) h.photo = b.dataset.photo;
+  });
 
   /* ---------- состояние ---------- */
   const params = new URLSearchParams(location.search);
@@ -94,13 +105,12 @@
   if (st.date && (st.date < iso(today) || st.date > iso(lastDay))) st.date = '';
   if (LUNCH.includes(params.get('time')) || DINNER.includes(params.get('time'))) st.time = params.get('time');
 
+  // сегодня нельзя выбрать время, до которого осталось меньше получаса
   const slotTaken = (date, time) => {
-    if (date === iso(today)) {
-      const [h, m] = time.split(':').map(Number);
-      const now = new Date();
-      if (h * 60 + m < now.getHours() * 60 + now.getMinutes() + 30) return true;
-    }
-    return hash(`${date}|${time}`) % 7 === 0;
+    if (date !== iso(today)) return false;
+    const [h, m] = time.split(':').map(Number);
+    const now = new Date();
+    return h * 60 + m < now.getHours() * 60 + now.getMinutes() + 30;
   };
   const hallOpen = (key, date) => {
     const s = HALLS[key].season;
@@ -108,14 +118,8 @@
     const m = Number(date.slice(5, 7));
     return m >= s[0] && m <= s[1];
   };
-  // состояние стола: free | busy | small (мало мест) | few (на стойке осталось меньше мест)
+  // состояние стола: free | small (мало мест или зал для большой компании)
   const tableState = (key, t) => {
-    const h = hash(`${st.date}|${st.time}|${key}|${t.id}`);
-    if (t.counter) {
-      const left = t.seats - (h % 7);
-      return st.guests > left ? { s: 'small', left } : { s: 'free', left };
-    }
-    if (h % 4 === 0) return { s: 'busy' };
     if (t.seats < st.guests) return { s: 'small' };
     if (HALLS[key].minGuests && st.guests < HALLS[key].minGuests) return { s: 'small', min: HALLS[key].minGuests };
     return { s: 'free' };
@@ -139,7 +143,7 @@
     sumWhen.textContent = st.date ? `${O.humanDate(st.date)}${st.time ? `, ${st.time}` : ''}` : '—';
     sumGuests.textContent = guestsText(st.guests);
     const hall = HALLS[st.hall];
-    sumWhere.textContent = st.table ? `${hall.name}: ${tableText(st.hall, st.table)}` : st.any ? `${hall.name}, любой свободный стол` : 'выберите на шаге 2';
+    sumWhere.textContent = st.table ? `${hall.name}: ${tableText(st.hall, st.table)}` : st.any ? `${hall.name}, стол на выбор администратора` : 'выберите на шаге 2';
     setPhoto(st.table ? st.table.view : hall.photo);
   };
 
@@ -201,8 +205,8 @@
   /* ---------- шаг 1: время ---------- */
   const slotList = (box, times) => {
     box.innerHTML = times.map((t) => {
-      const taken = !st.date || slotTaken(st.date, t);
-      return `<button type="button" data-time="${t}" aria-pressed="${t === st.time}"${taken ? ' disabled' : ''}${taken && st.date ? ' aria-label="' + t + ', мест нет"' : ''}>${t}</button>`;
+      const past = !!st.date && slotTaken(st.date, t);
+      return `<button type="button" data-time="${t}" aria-pressed="${t === st.time}"${past ? ' disabled aria-label="' + t + ', время прошло"' : ''}>${t}</button>`;
     }).join('');
   };
   const renderSlots = () => { slotList($('[data-slots-lunch]'), LUNCH); slotList($('[data-slots-dinner]'), DINNER); };
@@ -248,11 +252,9 @@
   };
   const describe = (key, t, state) => {
     const base = t.counter ? `Шеф-стол · ${t.where}` : `Стол ${t.id} · ${t.where} · на ${t.seats}`;
-    if (state.s === 'busy') return `${base} — занят на это время`;
     if (state.s === 'small' && state.min) return `${base} — для компании от ${state.min} гостей`;
-    if (state.s === 'small' && t.counter) return `${base} — осталось мест: ${state.left}`;
     if (state.s === 'small') return `${base} — мало мест для ${guestsText(st.guests)}`;
-    if (t.counter) return `${base} — свободно мест: ${state.left}, только сет шефа`;
+    if (t.counter) return `${base} — только сет шефа`;
     return base;
   };
   const renderPlan = () => {
@@ -273,7 +275,7 @@
     info.textContent = !open ? 'В этот день терраса закрыта — выберите другой зал.'
       : st.table ? `Ваш выбор: ${describe(key, st.table, tableState(key, st.table))}`
       : hall.setOnly ? 'За шеф-столом подают только сет «Вечер у огня».'
-      : 'Наведите на стол или нажмите на него, чтобы выбрать.';
+      : 'Выберите стол — администратор закрепит его за вами или предложит соседний.';
   };
   const findTable = (id) => HALLS[st.hall].tables.find((t) => String(t.id) === String(id));
   plan.addEventListener('click', (e) => {
@@ -378,7 +380,9 @@
       const r = await O.send('bron', fields, { consent: true, hp: '' });
       if (!r.ok) throw new Error(r.error || 'send');
       number = r.number;
-      $('[data-done-text]').textContent = `Заявка №${r.number}: ${O.humanDate(st.date)}, ${st.time}, ${guestsText(st.guests)}. Администратор позвонит или напишет в течение 15 минут, чтобы подтвердить бронь. Ночные заявки подтверждаем с 12:00.`;
+      const doneText = $('[data-done-text]');
+      const note = doneText.dataset.doneNote || 'Администратор позвонит или напишет в течение 15 минут, чтобы подтвердить бронь. Ночные заявки подтверждаем с 12:00.';
+      doneText.textContent = `Заявка №${r.number}: ${O.humanDate(st.date)}, ${st.time}, ${guestsText(st.guests)}. ${note}`;
       if (O.demo) {
         const box = $('[data-tg]');
         box.innerHTML = '';
@@ -394,7 +398,7 @@
       go(4);
     } catch {
       status.classList.add('is-error');
-      status.textContent = 'Не получилось отправить. Позвоните нам: +7 (495) 000-00-00.';
+      status.textContent = `Не получилось отправить. Позвоните нам: ${O.phone}.`;
     }
   });
 
@@ -404,7 +408,7 @@
     const [hh, mm] = st.time.split(':');
     const start = `${y}${m}${d}T${hh}${mm}00`;
     const endH = String(Math.min(23, Number(hh) + 2)).padStart(2, '0');
-    const where = st.table ? tableText(st.hall, st.table) : 'любой свободный стол';
+    const where = st.table ? tableText(st.hall, st.table) : 'стол на выбор администратора';
     const ics = [
       'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Olkha//Bron//RU', 'BEGIN:VEVENT',
       `UID:olkha-${number}-${Date.now()}@olkha`,

@@ -424,6 +424,7 @@ html.overlay-open .overlay__aside { opacity: 1; }
   overflow: hidden;
 }
 .footer__cta { display: grid; gap: 22px; padding-bottom: clamp(48px, 6vw, 88px); }
+[data-page="bron"] .footer__cta { display: none; }   /* на странице брони призыв «забронируйте» лишний */
 .footer__big {
   font-family: var(--serif);
   font-weight: 300;
@@ -444,7 +445,7 @@ html.overlay-open .overlay__aside { opacity: 1; }
   padding-bottom: 32px;
 }
 
-/* крупная навигация в подвале: строка въезжает с той стороны, откуда пришла мышь (как у K72) */
+/* крупная навигация в подвале */
 .bignav { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
 .bignav__item {
   position: relative;
@@ -464,29 +465,8 @@ html.overlay-open .overlay__aside { opacity: 1; }
   line-height: 1.1;
 }
 .bignav__word small { font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: var(--muted); }
-.bignav__run {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  background: var(--wax);
-  color: var(--coal);
-  transform: translateY(101%);
-  pointer-events: none;
-}
-.bignav__run > span {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(22px, 2.6vw, 36px);
-  animation: marquee 14s linear infinite;
-}
-.bignav__run b { font-weight: 300; padding: 0 0.5em; }
-.bignav__run img { width: 2.4em; height: 1.3em; object-fit: cover; border-radius: 999px; }
+.bignav__item:hover .bignav__word, .bignav__item[aria-current] .bignav__word { color: var(--accent); }
+.bignav__word { transition: color 0.3s; }
 
 .info { display: grid; grid-template-columns: auto 1fr; gap: 16px 28px; margin: 0; align-content: start; font-size: 17px; }
 .info dt { padding-top: 4px; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
@@ -561,67 +541,6 @@ html.overlay-open .overlay__aside { opacity: 1; }
   transition: clip-path 1.3s var(--ease) var(--d, 0s), transform 1.8s var(--ease) var(--d, 0s);
 }
 .js [data-img].is-in img { clip-path: inset(0); transform: none; }
-
-/* ---------- курсор (только мышь) ---------- */
-.cursor { display: none; }
-@media (hover: hover) and (pointer: fine) {
-  .cursor {
-    display: block;
-    position: fixed;
-    left: 0; top: 0;
-    z-index: 260;
-    pointer-events: none;
-  }
-  .cursor__dot {
-    position: absolute;
-    width: 8px; height: 8px;
-    margin: -4px 0 0 -4px;
-    border-radius: 50%;
-    background: var(--linen);
-    mix-blend-mode: difference;
-    transition: transform 0.3s var(--ease), opacity 0.3s;
-  }
-  .cursor__ring {
-    position: absolute;
-    width: 84px; height: 84px;
-    margin: -42px 0 0 -42px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: rgba(17, 13, 11, 0.55);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    color: var(--linen);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    transform: scale(0);
-    transition: transform 0.45s var(--ease);
-  }
-  .cursor.is-view .cursor__ring { transform: scale(1); }
-  .cursor.is-view .cursor__dot { transform: scale(0); }
-  .cursor.is-link .cursor__dot { transform: scale(3.2); }
-  .cursor.is-hidden .cursor__dot, html.candle-on .cursor__dot { opacity: 0; }
-}
-
-/* ---------- фото блюда за курсором (главная, меню) ---------- */
-.float-photo {
-  position: fixed;
-  left: 0; top: 0;
-  z-index: 90;
-  width: clamp(220px, 19vw, 300px);
-  aspect-ratio: 4 / 5;
-  margin: calc(clamp(220px, 19vw, 300px) * -0.625) 0 0 calc(clamp(220px, 19vw, 300px) * -0.5);
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0;
-  scale: 0.86;
-  transition: opacity 0.35s, scale 0.55s var(--ease);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
-}
-.float-photo img { width: 100%; height: 100%; object-fit: cover; }
-.float-photo.is-on { opacity: 1; scale: 1; }
 
 /* ---------- демо-окно ---------- */
 .demo { position: fixed; inset: 0; z-index: 350; display: grid; place-items: center; padding: 20px; }
@@ -700,5 +619,5 @@ html.overlay-open .overlay__aside { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .js [data-reveal], .js [data-lines] .line > span, .js [data-img] img { opacity: 1; transform: none; clip-path: none; }
-  .marquee__track, .bignav__run > span { animation: none; }
+  .marquee__track { animation: none; }
 }

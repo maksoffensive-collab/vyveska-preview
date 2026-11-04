@@ -40,10 +40,19 @@ html.evening {
   max-height: calc(100svh - var(--header-h) - 140px);
   justify-self: end;
 }
-.hero__photo figcaption {
-  position: absolute; left: 18px; bottom: 16px;
+/* «живое фото»: короткая петля из рендера поверх такого же кадра-постера, проступает, когда пошла */
+.hero__live { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; opacity: 0; transition: opacity 1.2s var(--ease); pointer-events: none; }
+.hero__photo.is-in .hero__live.is-playing { opacity: 1; }
+.hero__photo img { object-position: 50% 62%; }
+/* подписи на фото — на мягкой тени снизу, чтобы читались и на светлом кадре */
+.hero__photo figcaption,
+.people__photo figcaption {
+  position: absolute; z-index: 1; left: 0; right: 0; bottom: 0;
+  padding: 56px 18px 16px;
+  background: linear-gradient(to top, rgba(17, 13, 11, 0.62), rgba(17, 13, 11, 0));
   font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(239, 230, 214, 0.86);
+  color: rgba(239, 230, 214, 0.92);
+  pointer-events: none;
 }
 .hero__hint {
   position: absolute;
@@ -70,7 +79,8 @@ html.evening {
 /* строка брони: гостей · когда · время · кнопка */
 .quick {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  /* «гостей» — одна цифра, «когда» — до «чт, 26 ноября»: дате больше места, иначе на ноутбуке 1200 px она обрезается */
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.4fr) minmax(0, 0.95fr) auto;
   align-items: stretch;
   max-width: 680px;
   border: 1px solid var(--line);
@@ -108,14 +118,14 @@ html.evening {
   color: var(--fg);
   font-family: var(--serif);
   font-weight: 300;
-  font-size: 24px;
+  font-size: clamp(19px, 1.65vw, 24px);   /* «чт, 26 ноября» помещается и на ноутбуке 1024–1280 px */
   line-height: 1.3;
   cursor: pointer;
 }
 .quick select option { color: var(--ink); background: var(--linen); font-family: var(--sans); font-size: 16px; }
 .quick select:focus-visible { outline: none; }
 .quick__field:focus-within { box-shadow: inset 0 -2px 0 var(--accent); }
-.quick__go { border-radius: 0; min-height: 100%; padding: 0 28px; }
+.quick__go { border-radius: 0; min-height: 100%; padding: 0 clamp(18px, 2vw, 28px); }
 
 /* ---------- 19:00 · печь разгорается ---------- */
 .fire { padding-top: clamp(96px, 12vw, 180px); }
@@ -182,8 +192,8 @@ html.evening {
 .dishes { border-top: 1px solid var(--line); display: grid; }
 .dish {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) auto;
-  grid-template-areas: 'num name price' 'num desc price';
+  grid-template-columns: 40px 84px minmax(0, 1fr) auto;
+  grid-template-areas: 'num thumb name price' 'num thumb desc price';
   column-gap: 24px;
   row-gap: 6px;
   align-items: baseline;
@@ -198,12 +208,12 @@ html.evening {
   font-weight: 300;
   font-size: clamp(26px, 2.7vw, 42px);
   line-height: 1.08;
-  transition: transform 0.6s var(--ease), color 0.4s;
+  transition: color 0.3s;
 }
 .dish__desc { grid-area: desc; font-size: 15px; color: var(--muted); }
 .dish__price { grid-area: price; font-size: 18px; }
-.dish__thumb { display: none; }
-.dish:hover .dish__name { transform: translateX(16px); color: var(--accent); }
+.dish__thumb { grid-area: thumb; align-self: center; width: 84px; height: 105px; object-fit: cover; }
+.dish:hover .dish__name { color: var(--accent); }
 .dishes__all { justify-self: start; margin-top: 36px; }
 
 
@@ -223,45 +233,19 @@ html.evening {
 .set__word em { font-size: 0.36em; line-height: 1.1; font-style: italic; color: var(--accent); }
 .set__price { margin: 0; max-width: 34em; }
 
-.set__body {
+.courses {
+  list-style: none;
+  margin: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(40px, 7vw, 140px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 48px) clamp(16px, 2vw, 28px);
 }
-.set__stage {
-  position: sticky;
-  top: calc(var(--header-h) + 36px);
-  align-self: start;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: start;
-  gap: clamp(16px, 2vw, 32px);
-}
-.set__current { font-family: var(--serif); font-weight: 300; font-size: clamp(56px, 7vw, 110px); line-height: 0.9; color: var(--accent); }
-.set__photos { aspect-ratio: 4 / 5; max-height: calc(100svh - var(--header-h) - 90px); }
-.set__photos img {
-  position: absolute; inset: 0;
-  opacity: 0;
-  transform: scale(1.06);
-  transition: opacity 0.9s var(--ease-io), transform 1.4s var(--ease);
-}
-.set__photos img.is-on { opacity: 1; transform: none; }
-
-.courses { list-style: none; margin: 0; padding: 0; }
-.course {
-  min-height: 58vh;
-  display: grid;
-  align-content: center;
-  gap: 14px;
-  padding: 44px 0;
-  border-top: 1px solid var(--line);
-  opacity: 0.32;
-  transition: opacity 0.7s var(--ease);
-}
-.course.is-active { opacity: 1; }
+.course { display: grid; align-content: start; gap: 10px; }
+.course__pic { display: block; aspect-ratio: 4 / 5; margin-bottom: 8px; }
+.course__pic img { width: 100%; height: 100%; object-fit: cover; }
 .course__n { font-size: 12px; font-weight: 600; letter-spacing: 0.22em; color: var(--accent); }
-.course__name { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(28px, 3.1vw, 50px); line-height: 1.06; }
-.course p { margin: 0; max-width: 30em; color: var(--muted); }
+.course__name { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(22px, 1.9vw, 30px); line-height: 1.1; }
+.course p { margin: 0; font-size: 15px; color: var(--muted); }
 
 /* ---------- 21:30 · залы и люди ---------- */
 .halls { padding: clamp(100px, 12vw, 180px) 0 clamp(60px, 7vw, 110px); }
@@ -318,13 +302,6 @@ html.evening {
   background: var(--surface);
 }
 .people__photo img { width: 100%; height: 100%; object-fit: cover; }
-.people__photo figcaption {
-  position: absolute; right: 14px; bottom: 18px;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(239, 230, 214, 0.85);
-}
 .people__quote { margin: 0; }
 .people__quote p {
   margin: 0 0 24px;
@@ -403,35 +380,33 @@ html.evening {
 }
 
 @media (max-width: 860px) {
-  .hero__inner, .fire__grid, .dinner__grid, .set__body, .people { grid-template-columns: 1fr; }
+  .hero__inner, .fire__grid, .dinner__grid, .people { grid-template-columns: 1fr; }
+  .courses { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero { padding-top: calc(var(--header-h) + 8px); align-items: start; }
   .hero__photo { order: -1; max-height: 52svh; aspect-ratio: 4 / 4.2; justify-self: stretch; }
+  .hero__photo img, .hero__live { object-position: 50% 92%; }  /* кадр почти квадратный — держим в нём свечу */
   .hero__hint { display: none; }
   .dinner__head { position: static; }
   .dinner__photo { display: none; }
-  .set__stage {
-    top: var(--header-h);
-    z-index: 2;
-    grid-template-columns: auto 72px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-  }
-  .set__current { font-size: 44px; }
-  .set__photos { width: 72px; max-height: none; }
-  .course { min-height: 0; padding: 40px 0; }
   .people__photo { width: 78%; justify-self: center; }
 }
 
-@media (max-width: 720px) {
+/* быстрая бронь в два ряда уже на ноутбуке: в одну строку «пн, 16 ноября» не помещается */
+@media (max-width: 1140px) {
   .quick { grid-template-columns: 1fr 1fr; }
   .quick__field:nth-child(2) { border-right: 0; }
   .quick__field:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
   .quick__field:nth-child(3) { border-right: 1px solid var(--line); }
   .quick__go { min-height: 60px; }
+}
+@media (max-width: 720px) {
   .quick select { font-size: 21px; }
+  .courses { grid-template-columns: 1fr; gap: 22px; }
+  .course { grid-template-columns: 96px minmax(0, 1fr); grid-template-areas: 'pic n' 'pic name' 'pic text'; column-gap: 16px; row-gap: 4px; align-items: start; }
+  .course__pic { grid-area: pic; margin: 0; }
+  .course__n { grid-area: n; }
+  .course__name { grid-area: name; font-size: 22px; }
+  .course p { grid-area: text; font-size: 14px; }
   .dish {
     grid-template-columns: 76px minmax(0, 1fr) auto;
     grid-template-areas: 'thumb name name' 'thumb desc price';
@@ -440,7 +415,7 @@ html.evening {
     align-items: center;
   }
   .dish__num { display: none; }
-  .dish__thumb { display: block; grid-area: thumb; width: 76px; height: 95px; object-fit: cover; }
+  .dish__thumb { width: 76px; height: 95px; }
   .dish__name { font-size: 24px; }
   .dish__desc { font-size: 14px; }
   .dish__price { font-size: 16px; }
@@ -455,5 +430,4 @@ html.evening {
 @media (prefers-reduced-motion: reduce) {
   .js .candle__lit { -webkit-mask-image: none; mask-image: none; }
   .fire__photo img, .fire__band::after { animation: none; }
-  .course { opacity: 1; }
 }

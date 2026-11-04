@@ -5,6 +5,10 @@
   'use strict';
 
   const demo = document.body.hasAttribute('data-demo');
+  // адрес приёма заявок, телефон и ссылку на студию задаёт WordPress в <body>; у статического сайта — свои
+  const api = document.body.dataset.api || 'api/zayavka.php';
+  const phone = document.body.dataset.phone || '+7 (495) 000-00-00';
+  const studio = document.body.dataset.studio || '../vyveska/index.html#tiers';
   const opened = Date.now();
   const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   const DAYS = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
@@ -47,7 +51,7 @@
     if (type === 'bron') {
       L.push(`🔥 Бронь — «Ольха» · №${number}`);
       L.push(`${humanDate(f.date)} · ${f.time} · ${f.guests} ${plural(f.guests, 'гость', 'гостя', 'гостей')}`);
-      L.push(f.table ? `${f.hall} · ${f.table}` : `${f.hall} · любой свободный стол`);
+      L.push(f.table ? `${f.hall} · ${f.table}` : `${f.hall} · стол на выбор администратора`);
       if (f.set) L.push('Сет шефа «Вечер у огня»');
     } else if (type === 'banquet') {
       L.push(`🎉 Банкет — «Ольха» · №${number}`);
@@ -98,7 +102,7 @@
       await new Promise((r) => setTimeout(r, 600));
       return { ok: true, number, text: message(type, fields, number) };
     }
-    const res = await fetch('api/zayavka.php', {
+    const res = await fetch(api, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type, fields, elapsed: Date.now() - opened, ...extra }),
@@ -127,7 +131,7 @@
       box.append(note, tgPreview(text));
       const a = document.createElement('a');
       a.className = 'btn btn--fire';
-      a.href = '../vyveska/index.html#tiers';
+      a.href = studio;
       a.textContent = 'Хочу такой сайт';
       box.append(a);
     }
@@ -148,7 +152,7 @@
     return first;
   };
 
-  window.Olkha = { formatPhone, bindPhone, phoneOk, humanDate, send, showDone, validate, plural, demo };
+  window.Olkha = { formatPhone, bindPhone, phoneOk, humanDate, send, showDone, validate, plural, demo, phone };
 
   /* ---------- формы на странице событий и банкетов ---------- */
   document.querySelectorAll('[data-phone]').forEach(bindPhone);
@@ -185,7 +189,7 @@
         done.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } catch {
         status.classList.add('is-error');
-        status.textContent = 'Не получилось отправить. Позвоните нам: +7 (495) 000-00-00.';
+        status.textContent = `Не получилось отправить. Позвоните нам: ${phone}.`;
       }
     });
   });

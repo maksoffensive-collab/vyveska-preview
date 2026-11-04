@@ -24,28 +24,6 @@
     sections.forEach((s) => io.observe(s));
   }
 
-  // на телефоне фото блюда раскрывается по нажатию на строку
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.mrow[data-photo]').forEach((row) => {
-      row.setAttribute('role', 'button');
-      row.setAttribute('aria-expanded', 'false');
-      row.tabIndex = 0;
-      const toggle = () => {
-        if (!row.querySelector('.mrow__img')) {
-          const img = new Image();
-          img.className = 'mrow__img';
-          img.src = row.dataset.photo;
-          img.alt = row.querySelector('.mrow__name').textContent;
-          row.append(img);
-        }
-        const open = row.classList.toggle('is-open');
-        row.setAttribute('aria-expanded', String(open));
-      };
-      row.addEventListener('click', toggle);
-      row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
-    });
-  }
-
   const print = document.querySelector('[data-print]');
   if (print) print.addEventListener('click', () => window.print());
 })();

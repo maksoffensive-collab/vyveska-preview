@@ -1,4 +1,4 @@
-/* Ольха — страница меню: разделы слева (на телефоне — вкладки сверху), строки блюд, сет шефа, печать */
+/* Ольха — страница меню: разделы слева (на телефоне — вкладки сверху), карточки блюд с иллюстрациями, вино списком, сет шефа, печать */
 
 .page-head__actions { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 8px; }
 .link--btn { border: 0; background: none; cursor: pointer; padding: 0 0 4px; }
@@ -23,11 +23,11 @@
   gap: 14px;
   padding: 7px 0;
   font-family: var(--serif);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 22px;
   line-height: 1.2;
   text-decoration: none;
-  color: var(--muted);
+  color: rgba(239, 230, 214, 0.62);
   transition: color 0.3s;
 }
 .mnav a .num { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.2em; }
@@ -46,7 +46,6 @@
 }
 .legend li { display: flex; align-items: center; gap: 12px; }
 .legend svg { width: 20px; height: 20px; color: var(--fg); }
-.legend__photo::before { content: ''; width: 7px; height: 7px; margin: 0 6px 0 7px; border-radius: 50%; background: var(--accent); }
 
 .msec { padding-bottom: clamp(56px, 7vw, 100px); scroll-margin-top: calc(var(--header-h) + 24px); }
 .msec__title {
@@ -82,22 +81,55 @@
   font-weight: 300;
   font-size: clamp(22px, 2vw, 28px);
   line-height: 1.15;
-  transition: color 0.3s, transform 0.5s var(--ease);
 }
 .mrow__desc { grid-area: desc; font-size: 15px; color: var(--muted); }
 .mrow__w { grid-area: w; font-size: 14px; color: var(--muted); white-space: nowrap; }
 .mrow__price { grid-area: price; min-width: 5.2em; text-align: right; font-size: 18px; white-space: nowrap; }
 .tag { width: 20px; height: 20px; flex: none; color: var(--muted); }
 
-/* у блюда есть фото — точка рядом с названием, при наведении фото идёт за курсором */
-.mrow[data-photo] .mrow__name::after { content: ''; order: 9; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-@media (hover: hover) and (pointer: fine) {
-  .mrow[data-photo]:hover .mrow__name { color: var(--accent); transform: translateX(10px); }
+/* ---------- карточки блюд: иллюстрация, название, состав, выход, цена ---------- */
+.dgrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
-
-.mrow__img { grid-column: 1 / -1; display: none; width: min(100%, 340px); aspect-ratio: 4 / 5; object-fit: cover; margin-top: 12px; }
-.mrow.is-open .mrow__img { display: block; }
-.mrow[data-photo] { cursor: pointer; }
+.dcard {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--linen);
+  color: var(--ink);
+}
+.dcard__pic { position: relative; aspect-ratio: 4 / 3; border-bottom: 1px solid rgba(31, 23, 18, 0.12); }
+.dcard__pic img { display: block; width: 100%; height: 100%; object-fit: contain; padding: 4% 6% 9%; }   /* снизу место под подпись */
+.dcard__plant { position: absolute; right: 14px; bottom: 10px; font-family: var(--serif); font-style: italic; font-size: 14px; color: #7a6858; }
+.dcard__body { display: grid; grid-template-rows: auto 1fr auto; gap: 8px; padding: 16px 18px 16px; }
+.dcard__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 1.15;
+}
+.dcard__tags { display: inline-flex; gap: 4px; }
+.dcard .tag { width: 18px; height: 18px; color: #7a6858; }
+.dcard__desc { margin: 0; font-size: 15px; line-height: 1.45; color: #5b4b3e; }
+.dcard__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(31, 23, 18, 0.14);
+}
+.dcard__w { font-size: 14px; color: #6e5e50; }
+.dcard__price { font-size: 19px; font-weight: 600; color: var(--alder-deep); white-space: nowrap; }
 
 .msec__note, .menu__note { margin: 22px 0 0; max-width: 42em; font-size: 14px; color: var(--muted); }
 
@@ -152,7 +184,19 @@
   .mset__inner { grid-template-columns: 1fr; }
   .mset__head { position: static; }
 }
+@media (max-width: 1100px) and (min-width: 601px) {
+  .dgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 600px) {
+  .dgrid { grid-template-columns: 1fr; gap: 10px; }
+  .dcard { grid-template-columns: 112px minmax(0, 1fr); grid-template-rows: none; }
+  .dcard__pic { aspect-ratio: auto; border-bottom: 0; border-right: 1px solid rgba(31, 23, 18, 0.12); }
+  .dcard__plant { display: none; }
+  .dcard__pic img { padding: 8%; }
+  .dcard__body { padding: 12px 14px; gap: 6px; }
+  .dcard__name { font-size: 18px; }
+  .dcard__desc { font-size: 13.5px; }
+  .dcard__price { font-size: 17px; }
   .mrow { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'name price' 'desc w'; column-gap: 16px; padding: 16px 0; }
   .mrow__name { font-size: 21px; }
   .mrow__price { font-size: 16px; min-width: 0; }
@@ -164,7 +208,7 @@
 @media print {
   @page { margin: 14mm 12mm; }
   body { background: #fff; color: #111; font-size: 11pt; padding: 0; }
-  body::after, .header, .overlay, .dock, .cursor, .footer, .menu__side, .page-head__actions, .mset .btn, .float-photo, .demo, .skip { display: none !important; }
+  body::after, .header, .overlay, .dock, .cursor, .footer, .menu__side, .page-head__actions, .mset .btn, .demo, .skip { display: none !important; }
   .page-head { padding: 0 0 8mm; }
   .page-head .h1 { font-size: 40pt; }
   .js [data-reveal], .js [data-lines] .line > span { opacity: 1 !important; transform: none !important; }
@@ -176,7 +220,14 @@
   .mrow__name { font-size: 12pt; }
   .mrow__desc, .mrow__w, .msec__note, .menu__note, .muted { color: #555; font-size: 9pt; }
   .mrow__price { font-size: 11pt; }
-  .tag, .mrow[data-photo] .mrow__name::after { display: none; }
+  .tag, .dcard__pic { display: none; }
+  .dgrid { display: block; }
+  .dcard { display: block; background: none; padding: 2.2mm 0; border-bottom: 1px solid #ccc; break-inside: avoid; }
+  .dcard__body { display: grid; grid-template-columns: 1fr auto auto; gap: 0 4mm; padding: 0; }
+  .dcard__name { font-size: 12pt; }
+  .dcard__desc { grid-column: 1; font-size: 9pt; color: #555; }
+  .dcard__foot { grid-column: 2 / 4; grid-row: 1; border: 0; padding: 0; }
+  .dcard__w { font-size: 9pt; } .dcard__price { font-size: 11pt; color: #111; }
   .mset { background: none; padding: 6mm 0 0; break-before: page; }
   .mset__inner { display: block; }
   :root, body { --fg: #111; --muted: #555; --line: #ccc; --accent: #a9431f; }

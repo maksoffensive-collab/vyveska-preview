@@ -1,11 +1,9 @@
-/* Ольха — общее для всех страниц: шапка, полноэкранное меню, появления, курсор,
-   строка в навигации подвала (въезжает с направления мыши), демо-окно */
+/* Ольха — общее для всех страниц: шапка, полноэкранное меню, появления, демо-окно */
 (() => {
   'use strict';
 
   const html = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ---------- шапка: прячется при прокрутке вниз, возвращается вверх ---------- */
   const header = document.querySelector('[data-header]');
@@ -50,83 +48,28 @@
     const group = [...el.parentElement.children].filter((c) => c.matches('[data-reveal], [data-lines], [data-img]'));
     el.style.setProperty('--d', `${Math.min(group.indexOf(el), 6) * 0.08}s`);
   });
+  // фото открываем, когда картинка уже загружена и раскодирована, иначе шторка едет по пустой подложке.
+  // Картинку под шторкой (clip-path) браузер считает невидимой и сам не грузит — поэтому грузим её сразу.
+  const loaded = (el) => Promise.race([
+    Promise.all([...el.querySelectorAll('img')].map((img) => {
+      if (img.loading === 'lazy') img.loading = 'eager';
+      if (img.complete && img.naturalWidth) return null;
+      return img.decode ? img.decode().catch(() => {}) : new Promise((r) => { img.onload = img.onerror = r; });
+    })),
+    new Promise((r) => setTimeout(r, 2500)),
+  ]);
   if ('IntersectionObserver' in window && !reduced) {
     const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        if (e.target.hasAttribute('data-img')) loaded(e.target).then(() => e.target.classList.add('is-in'));
+        else e.target.classList.add('is-in');
+      });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
     reveals.forEach((el) => io.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add('is-in'));
-  }
-
-  /* ---------- курсор (только мышь) ---------- */
-  const cursor = document.querySelector('[data-cursor]');
-  if (cursor && finePointer) {
-    const label = cursor.querySelector('[data-cursor-label]');
-    let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y, raf = 0;
-    const move = () => {
-      cx += (x - cx) * 0.22;
-      cy += (y - cy) * 0.22;
-      cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-      raf = Math.abs(x - cx) + Math.abs(y - cy) > 0.3 ? requestAnimationFrame(move) : 0;
-    };
-    addEventListener('pointermove', (e) => {
-      x = e.clientX; y = e.clientY;
-      if (!raf) raf = requestAnimationFrame(move);
-      const t = e.target.closest ? e.target : null;
-      const view = t && t.closest('[data-cursor="view"]');
-      cursor.classList.toggle('is-view', !!view);
-      if (view) label.textContent = view.dataset.cursorLabel || 'Смотреть';
-      cursor.classList.toggle('is-link', !view && !!(t && t.closest('a, button, label, select, [data-cursor="link"]')));
-    }, { passive: true });
-    document.addEventListener('pointerleave', () => cursor.classList.add('is-hidden'));
-    document.addEventListener('pointerenter', () => cursor.classList.remove('is-hidden'));
-  }
-
-  /* ---------- фото блюда идёт за курсором (главная и меню): строки [data-photo] внутри [data-dishes] ---------- */
-  const float = document.querySelector('[data-float]');
-  if (float && finePointer && !reduced) {
-    const img = float.querySelector('img');
-    let x = 0, y = 0, fx = 0, fy = 0, raf = 0, on = false;
-    const tick = () => {
-      const dx = x - fx;
-      fx += (x - fx) * 0.14;
-      fy += (y - fy) * 0.14;
-      float.style.transform = `translate3d(${fx}px, ${fy}px, 0) rotate(${Math.max(-8, Math.min(8, dx * 0.04))}deg)`;
-      raf = on || Math.abs(dx) > 0.5 ? requestAnimationFrame(tick) : 0;
-    };
-    const hide = () => { on = false; float.classList.remove('is-on'); };
-    document.querySelectorAll('[data-dishes]').forEach((list) => {
-      list.querySelectorAll('[data-photo]').forEach((dish) => {
-        dish.addEventListener('pointerenter', (e) => {
-          if (!on) { fx = x = e.clientX; fy = y = e.clientY; }
-          img.src = dish.dataset.photo;
-          on = true;
-          float.classList.add('is-on');
-          if (!raf) raf = requestAnimationFrame(tick);
-        });
-        dish.addEventListener('pointerleave', hide);
-      });
-      list.addEventListener('pointermove', (e) => { x = e.clientX; y = e.clientY; });
-    });
-    addEventListener('scroll', () => { if (on) hide(); }, { passive: true });
-  }
-
-  /* ---------- навигация подвала: строка въезжает с той стороны, откуда пришла мышь ---------- */
-  if (finePointer && !reduced) {
-    document.querySelectorAll('[data-bignav] .bignav__item').forEach((item) => {
-      const run = item.querySelector('.bignav__run');
-      const side = (e) => {
-        const r = item.getBoundingClientRect();
-        return e.clientY < r.top + r.height / 2 ? -1 : 1;
-      };
-      const go = (from, to) => run.animate(
-        [{ transform: `translateY(${from}%)` }, { transform: `translateY(${to}%)` }],
-        { duration: 550, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' },
-      );
-      item.addEventListener('mouseenter', (e) => go(side(e) * 101, 0));
-      item.addEventListener('mouseleave', (e) => go(0, side(e) * 101));
-    });
   }
 
   /* ---------- демо-окно вместо мессенджеров ресторана ---------- */

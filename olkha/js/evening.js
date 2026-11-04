@@ -1,6 +1,5 @@
 /* Ольха — главная: «вечер за одну прокрутку».
-   Часы в шапке идут 18:00 → 00:00, палитра меняется по сценам, фото блюда идёт за курсором,
-   сет шефа показывается курс за курсом, подписи залов въезжают с направления мыши,
+   Часы в шапке идут 18:00 → 00:00, палитра меняется по сценам, подписи залов въезжают с направления мыши,
    в сцене 23:00 курсор (или палец) — свеча, которая проявляет освещённое фото. */
 (() => {
   'use strict';
@@ -75,7 +74,9 @@
   const tomorrowLink = document.querySelector('[data-tomorrow-link]');
   if (tomorrowLink) {
     const t = day(1);
-    tomorrowLink.href = `bron.html?date=${iso(t)}&time=19:30&guests=2`;
+    const u = new URL(tomorrowLink.getAttribute('href'), location.href);   // адрес брони берём из ссылки (на WordPress он другой)
+    u.search = `?date=${iso(t)}&time=19:30&guests=2`;
+    tomorrowLink.href = u.href;
     tomorrowLink.textContent = `Забронировать на ${t.getDate()} ${MONTHS[t.getMonth()]}`;
   }
 
@@ -89,23 +90,6 @@
     };
     addEventListener('scroll', par, { passive: true });
     par();
-  }
-
-  /* ---------- 20:30: сет шефа — курс за курсом ---------- */
-  const courses = [...main.querySelectorAll('[data-courses] .course')];
-  const setNum = main.querySelector('[data-set-num]');
-  const setPhotos = [...main.querySelectorAll('[data-set-photos] img')];
-  if (courses.length && 'IntersectionObserver' in window) {
-    const show = (i) => {
-      courses.forEach((c, k) => c.classList.toggle('is-active', k === i));
-      setPhotos.forEach((p, k) => p.classList.toggle('is-on', k === i));
-      setNum.textContent = String(i + 1).padStart(2, '0');
-    };
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) show(courses.indexOf(e.target)); });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-    courses.forEach((c) => io.observe(c));
-    show(0);
   }
 
   /* ---------- 21:30: подпись зала въезжает с той стороны, откуда пришла мышь ---------- */
@@ -172,5 +156,24 @@
       if (visible && !raf) raf = requestAnimationFrame(frame);
     }, { threshold: 0.15 }).observe(candle);
     addEventListener('resize', toAnchor);
+  }
+
+  /* ---------- «живое фото» на первом экране ---------- */
+  // Петля из рендера (6 с, ~1–2 МБ) грузится только после всей страницы и только если зритель не просил
+  // экономить трафик или убрать движение; играет, пока первый экран виден, иначе стоит (бережём батарею телефона).
+  const live = document.querySelector('[data-live]');
+  const save = !!(navigator.connection && navigator.connection.saveData);
+  if (live && !reduced && !save) {
+    const start = () => {
+      live.src = `${live.dataset.live}-${innerWidth <= 720 ? 720 : 1080}.mp4`;
+      live.addEventListener('playing', () => live.classList.add('is-playing'), { once: true });
+      let seen = true;
+      new IntersectionObserver(([e]) => {
+        seen = e.isIntersecting;
+        if (seen) live.play().catch(() => {}); else live.pause();
+      }, { threshold: 0.05 }).observe(live);
+      if (seen) live.play().catch(() => {});
+    };
+    if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
   }
 })();

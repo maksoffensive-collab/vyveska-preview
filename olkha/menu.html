@@ -112,17 +112,18 @@
       </div>
     </header>
 
+<!-- @menu -->
     <div class="menu container">
       <aside class="menu__side">
         <nav class="mnav" aria-label="Разделы меню" data-mnav>
-          <a href="#s-zakuski"><span class="num">01</span>Хлеб и закуски</a>
+          <a href="#s-zakuski"><span class="num">01</span>Хлеб и&nbsp;закуски</a>
           <a href="#s-pech"><span class="num">02</span>С&nbsp;печи</a>
           <a href="#s-gril"><span class="num">03</span>С&nbsp;гриля</a>
           <a href="#s-supy"><span class="num">04</span>Супы</a>
           <a href="#s-garniry"><span class="num">05</span>Гарниры</a>
           <a href="#s-deserty"><span class="num">06</span>Десерты</a>
           <a href="#s-napitki"><span class="num">07</span>Напитки</a>
-          <a href="#s-vino"><span class="num">08</span>Вино</a>
+          <a href="#s-vino"><span class="num">08</span>Вино по&nbsp;бокалам</a>
           <a href="#s-set"><span class="num">09</span>Сет шефа</a>
         </nav>
         <ul class="legend" aria-label="Обозначения">
@@ -130,85 +131,84 @@
           <li><svg aria-hidden="true"><use href="#t-veg"/></svg>вегетарианское</li>
           <li><svg aria-hidden="true"><use href="#t-gluten"/></svg>без глютена</li>
           <li><svg aria-hidden="true"><use href="#t-nuts"/></svg>с&nbsp;орехами</li>
-          <li class="legend__photo">есть фото&nbsp;— наведите или нажмите</li>
         </ul>
       </aside>
 
-      <div class="menu__body" data-dishes>
+      <div class="menu__body">
         <section class="msec" id="s-zakuski" aria-labelledby="h-zakuski">
-          <h2 class="msec__title" id="h-zakuski" data-reveal><span class="num">01</span>Хлеб и&nbsp;закуски</h2>
-          <ul class="mlist">
-            <li class="mrow" data-photo="img/dish-bread-720.webp"><span class="mrow__name">Ржаной хлеб из&nbsp;печи<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span><span class="mrow__desc">на&nbsp;закваске, топлёное масло, крупная соль</span><span class="mrow__w num">220&nbsp;г</span><span class="mrow__price num">290&nbsp;₽</span></li>
-            <li class="mrow" data-photo="img/table-detail-720.webp"><span class="mrow__name">Форель холодного копчения на&nbsp;ольхе</span><span class="mrow__desc">сметана с&nbsp;хреном, ржаные гренки</span><span class="mrow__w num">120&nbsp;г</span><span class="mrow__price num">890&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Строганина из&nbsp;муксуна<svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span><span class="mrow__desc">соль, перец, морошка</span><span class="mrow__w num">110&nbsp;г</span><span class="mrow__price num">1&nbsp;150&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Паштет из&nbsp;утиной печени</span><span class="mrow__desc">брусника, гренки из&nbsp;ржаного хлеба</span><span class="mrow__w num">140&nbsp;г</span><span class="mrow__price num">690&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Печёная свёкла<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg><svg class="tag" role="img" aria-label="с орехами"><use href="#t-nuts"/></svg></span><span class="mrow__desc">творожный крем, лесной орех</span><span class="mrow__w num">180&nbsp;г</span><span class="mrow__price num">750&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Квашеные овощи из&nbsp;погреба<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span><span class="mrow__desc">капуста, огурцы, морковь с&nbsp;кориандром</span><span class="mrow__w num">200&nbsp;г</span><span class="mrow__price num">450&nbsp;₽</span></li>
+          <h2 class="msec__title" id="h-zakuski"><span class="num">01</span>Хлеб и&nbsp;закуски</h2>
+          <ul class="dgrid">
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-rye-480.webp" srcset="img/menu-rye-480.webp 480w, img/menu-rye-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">рожь</span></div><div class="dcard__body"><h3 class="dcard__name">Ржаной хлеб из&nbsp;печи<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span></h3><p class="dcard__desc">на&nbsp;закваске, топлёное масло, крупная соль</p><div class="dcard__foot"><span class="dcard__w num">220&nbsp;г</span><b class="dcard__price num">290&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-alder-480.webp" srcset="img/menu-alder-480.webp 480w, img/menu-alder-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">ольха</span></div><div class="dcard__body"><h3 class="dcard__name">Форель холодного копчения на&nbsp;ольхе</h3><p class="dcard__desc">сметана с&nbsp;хреном, ржаные гренки</p><div class="dcard__foot"><span class="dcard__w num">120&nbsp;г</span><b class="dcard__price num">890&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-cloudberry-480.webp" srcset="img/menu-cloudberry-480.webp 480w, img/menu-cloudberry-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">морошка</span></div><div class="dcard__body"><h3 class="dcard__name">Строганина из&nbsp;муксуна<span class="dcard__tags"><svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span></h3><p class="dcard__desc">соль, перец, морошка</p><div class="dcard__foot"><span class="dcard__w num">110&nbsp;г</span><b class="dcard__price num">1&nbsp;150&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-lingonberry-480.webp" srcset="img/menu-lingonberry-480.webp 480w, img/menu-lingonberry-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">брусника</span></div><div class="dcard__body"><h3 class="dcard__name">Паштет из&nbsp;утиной печени</h3><p class="dcard__desc">брусника, гренки из&nbsp;ржаного хлеба</p><div class="dcard__foot"><span class="dcard__w num">140&nbsp;г</span><b class="dcard__price num">690&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-beet-480.webp" srcset="img/menu-beet-480.webp 480w, img/menu-beet-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">свёкла</span></div><div class="dcard__body"><h3 class="dcard__name">Печёная свёкла<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg><svg class="tag" role="img" aria-label="с орехами"><use href="#t-nuts"/></svg></span></h3><p class="dcard__desc">творожный крем, лесной орех</p><div class="dcard__foot"><span class="dcard__w num">180&nbsp;г</span><b class="dcard__price num">750&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-cucumber-480.webp" srcset="img/menu-cucumber-480.webp 480w, img/menu-cucumber-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">огурец</span></div><div class="dcard__body"><h3 class="dcard__name">Квашеные овощи из&nbsp;погреба<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span></h3><p class="dcard__desc">капуста, огурцы, морковь с&nbsp;кориандром</p><div class="dcard__foot"><span class="dcard__w num">200&nbsp;г</span><b class="dcard__price num">450&nbsp;₽</b></div></div></li>
           </ul>
         </section>
 
         <section class="msec" id="s-pech" aria-labelledby="h-pech">
-          <h2 class="msec__title" id="h-pech" data-reveal><span class="num">02</span>С&nbsp;печи</h2>
-          <ul class="mlist">
-            <li class="mrow" data-photo="img/dish-pumpkin-720.webp"><span class="mrow__name">Тыква из&nbsp;печи<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span><span class="mrow__desc">козий сыр, тыквенные семечки, мёд</span><span class="mrow__w num">260&nbsp;г</span><span class="mrow__price num">890&nbsp;₽</span></li>
-            <li class="mrow" data-photo="img/dish-cheek-720.webp"><span class="mrow__name">Говяжья щека, 12&nbsp;часов в&nbsp;печи</span><span class="mrow__desc">пюре из&nbsp;сельдерея, соус на&nbsp;квасе</span><span class="mrow__w num">320&nbsp;г</span><span class="mrow__price num">1&nbsp;690&nbsp;₽</span></li>
-            <li class="mrow" data-photo="img/plating-2-720.webp"><span class="mrow__name">Щука, раки, укроп</span><span class="mrow__desc">запекаем целиком, сливочный соус</span><span class="mrow__w num">280&nbsp;г</span><span class="mrow__price num">1&nbsp;450&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Томлёная утиная ножка</span><span class="mrow__desc">печёное яблоко, капуста</span><span class="mrow__w num">300&nbsp;г</span><span class="mrow__price num">1&nbsp;350&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Пирог с&nbsp;белыми грибами<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span><span class="mrow__desc">на&nbsp;двоих, сметана с&nbsp;зеленью</span><span class="mrow__w num">600&nbsp;г</span><span class="mrow__price num">1&nbsp;290&nbsp;₽</span></li>
+          <h2 class="msec__title" id="h-pech"><span class="num">02</span>С&nbsp;печи</h2>
+          <ul class="dgrid">
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-pumpkin-480.webp" srcset="img/menu-pumpkin-480.webp 480w, img/menu-pumpkin-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">тыква</span></div><div class="dcard__body"><h3 class="dcard__name">Тыква из&nbsp;печи<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span></h3><p class="dcard__desc">козий сыр, тыквенные семечки, мёд</p><div class="dcard__foot"><span class="dcard__w num">260&nbsp;г</span><b class="dcard__price num">890&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-celery-480.webp" srcset="img/menu-celery-480.webp 480w, img/menu-celery-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">сельдерей</span></div><div class="dcard__body"><h3 class="dcard__name">Говяжья щека, 12&nbsp;часов в&nbsp;печи</h3><p class="dcard__desc">пюре из&nbsp;сельдерея, соус на&nbsp;квасе</p><div class="dcard__foot"><span class="dcard__w num">320&nbsp;г</span><b class="dcard__price num">1&nbsp;690&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-dill-480.webp" srcset="img/menu-dill-480.webp 480w, img/menu-dill-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">укроп</span></div><div class="dcard__body"><h3 class="dcard__name">Щука из&nbsp;печи</h3><p class="dcard__desc">раки, укроп, сливочный соус; запекаем целиком</p><div class="dcard__foot"><span class="dcard__w num">280&nbsp;г</span><b class="dcard__price num">1&nbsp;450&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-cabbage-480.webp" srcset="img/menu-cabbage-480.webp 480w, img/menu-cabbage-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">капуста</span></div><div class="dcard__body"><h3 class="dcard__name">Томлёная утиная ножка</h3><p class="dcard__desc">печёное яблоко, капуста</p><div class="dcard__foot"><span class="dcard__w num">300&nbsp;г</span><b class="dcard__price num">1&nbsp;350&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-porcini-480.webp" srcset="img/menu-porcini-480.webp 480w, img/menu-porcini-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">белый гриб</span></div><div class="dcard__body"><h3 class="dcard__name">Пирог с&nbsp;белыми грибами<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span></h3><p class="dcard__desc">на&nbsp;двоих, сметана с&nbsp;зеленью</p><div class="dcard__foot"><span class="dcard__w num">600&nbsp;г</span><b class="dcard__price num">1&nbsp;290&nbsp;₽</b></div></div></li>
           </ul>
         </section>
 
         <section class="msec" id="s-gril" aria-labelledby="h-gril">
-          <h2 class="msec__title" id="h-gril" data-reveal><span class="num">03</span>С&nbsp;гриля</h2>
-          <ul class="mlist">
-            <li class="mrow" data-photo="img/dish-steak-720.webp"><span class="mrow__name">Оленина<svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span><span class="mrow__desc">можжевельник, печёные корнеплоды</span><span class="mrow__w num">250&nbsp;г</span><span class="mrow__price num">2&nbsp;400&nbsp;₽</span></li>
-            <li class="mrow" data-photo="img/grill-1000.webp"><span class="mrow__name">Утка на&nbsp;углях</span><span class="mrow__desc">брусника, печёный лук</span><span class="mrow__w num">320&nbsp;г</span><span class="mrow__price num">1&nbsp;750&nbsp;₽</span></li>
-            <li class="mrow" data-photo="img/meat-raw-720.webp"><span class="mrow__name">Стейк из&nbsp;говядины</span><span class="mrow__desc">зерновой откорм, соус из&nbsp;хрена; цена за&nbsp;100&nbsp;г</span><span class="mrow__w num">от&nbsp;300&nbsp;г</span><span class="mrow__price num">950&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Скумбрия на&nbsp;углях<svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span><span class="mrow__desc">лимон, укроп, печёный картофель</span><span class="mrow__w num">280&nbsp;г</span><span class="mrow__price num">1&nbsp;050&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Овощи с&nbsp;огня<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg><svg class="tag" role="img" aria-label="острое"><use href="#t-spicy"/></svg></span><span class="mrow__desc">соус из&nbsp;печёного перца</span><span class="mrow__w num">260&nbsp;г</span><span class="mrow__price num">650&nbsp;₽</span></li>
+          <h2 class="msec__title" id="h-gril"><span class="num">03</span>С&nbsp;гриля</h2>
+          <ul class="dgrid">
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-juniper-480.webp" srcset="img/menu-juniper-480.webp 480w, img/menu-juniper-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">можжевельник</span></div><div class="dcard__body"><h3 class="dcard__name">Оленина на&nbsp;гриле<span class="dcard__tags"><svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span></h3><p class="dcard__desc">можжевельник, печёные корнеплоды</p><div class="dcard__foot"><span class="dcard__w num">250&nbsp;г</span><b class="dcard__price num">2&nbsp;400&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-onion-480.webp" srcset="img/menu-onion-480.webp 480w, img/menu-onion-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">лук</span></div><div class="dcard__body"><h3 class="dcard__name">Утка на&nbsp;углях</h3><p class="dcard__desc">брусника, печёный лук</p><div class="dcard__foot"><span class="dcard__w num">320&nbsp;г</span><b class="dcard__price num">1&nbsp;750&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-barley-480.webp" srcset="img/menu-barley-480.webp 480w, img/menu-barley-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">ячмень</span></div><div class="dcard__body"><h3 class="dcard__name">Стейк из&nbsp;говядины</h3><p class="dcard__desc">зерновой откорм, соус из&nbsp;хрена; цена за&nbsp;100&nbsp;г</p><div class="dcard__foot"><span class="dcard__w num">от&nbsp;300&nbsp;г</span><b class="dcard__price num">950&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-lemon-480.webp" srcset="img/menu-lemon-480.webp 480w, img/menu-lemon-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">лимон</span></div><div class="dcard__body"><h3 class="dcard__name">Скумбрия на&nbsp;углях<span class="dcard__tags"><svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span></h3><p class="dcard__desc">лимон, укроп, печёный картофель</p><div class="dcard__foot"><span class="dcard__w num">280&nbsp;г</span><b class="dcard__price num">1&nbsp;050&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-pepper-480.webp" srcset="img/menu-pepper-480.webp 480w, img/menu-pepper-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">перец</span></div><div class="dcard__body"><h3 class="dcard__name">Овощи с&nbsp;огня<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg><svg class="tag" role="img" aria-label="острое"><use href="#t-spicy"/></svg></span></h3><p class="dcard__desc">соус из&nbsp;печёного перца</p><div class="dcard__foot"><span class="dcard__w num">260&nbsp;г</span><b class="dcard__price num">650&nbsp;₽</b></div></div></li>
           </ul>
         </section>
 
         <section class="msec" id="s-supy" aria-labelledby="h-supy">
-          <h2 class="msec__title" id="h-supy" data-reveal><span class="num">04</span>Супы</h2>
-          <ul class="mlist">
-            <li class="mrow" data-photo="img/dish-uha-720.webp"><span class="mrow__name">Уха на&nbsp;углях</span><span class="mrow__desc">судак, форель, головешка в&nbsp;конце&nbsp;— как на&nbsp;Волге</span><span class="mrow__w num">350&nbsp;г</span><span class="mrow__price num">790&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Щи, томлённые в&nbsp;печи</span><span class="mrow__desc">говядина, квашеная капуста, сметана</span><span class="mrow__w num">350&nbsp;г</span><span class="mrow__price num">590&nbsp;₽</span></li>
-            <li class="mrow" data-photo="img/dish-shchi-720.webp"><span class="mrow__name">Суп из&nbsp;печёной тыквы<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span><span class="mrow__desc">облепиховое масло, семечки</span><span class="mrow__w num">300&nbsp;г</span><span class="mrow__price num">550&nbsp;₽</span></li>
+          <h2 class="msec__title" id="h-supy"><span class="num">04</span>Супы</h2>
+          <ul class="dgrid">
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-laurel-480.webp" srcset="img/menu-laurel-480.webp 480w, img/menu-laurel-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">лавр</span></div><div class="dcard__body"><h3 class="dcard__name">Уха на&nbsp;углях</h3><p class="dcard__desc">судак, форель, головешка в&nbsp;конце&nbsp;— как&nbsp;на&nbsp;Волге</p><div class="dcard__foot"><span class="dcard__w num">350&nbsp;г</span><b class="dcard__price num">790&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-cabbage2-480.webp" srcset="img/menu-cabbage2-480.webp 480w, img/menu-cabbage2-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">капуста</span></div><div class="dcard__body"><h3 class="dcard__name">Щи, томлённые в&nbsp;печи</h3><p class="dcard__desc">говядина, квашеная капуста, сметана</p><div class="dcard__foot"><span class="dcard__w num">350&nbsp;г</span><b class="dcard__price num">590&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-pumpkin2-480.webp" srcset="img/menu-pumpkin2-480.webp 480w, img/menu-pumpkin2-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">тыква</span></div><div class="dcard__body"><h3 class="dcard__name">Суп из&nbsp;печёной тыквы<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span></h3><p class="dcard__desc">облепиховое масло, семечки</p><div class="dcard__foot"><span class="dcard__w num">300&nbsp;г</span><b class="dcard__price num">550&nbsp;₽</b></div></div></li>
           </ul>
         </section>
 
         <section class="msec" id="s-garniry" aria-labelledby="h-garniry">
-          <h2 class="msec__title" id="h-garniry" data-reveal><span class="num">05</span>Гарниры</h2>
-          <ul class="mlist">
-            <li class="mrow"><span class="mrow__name">Картофель в&nbsp;золе<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span><span class="mrow__desc">солёное масло, укроп</span><span class="mrow__w num">200&nbsp;г</span><span class="mrow__price num">350&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Печёная морковь с&nbsp;мёдом<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span><span class="mrow__desc">тмин, сметана</span><span class="mrow__w num">180&nbsp;г</span><span class="mrow__price num">350&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Гречка с&nbsp;белыми грибами<svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg><svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span><span class="mrow__desc">томлёная в&nbsp;чугунке</span><span class="mrow__w num">200&nbsp;г</span><span class="mrow__price num">450&nbsp;₽</span></li>
+          <h2 class="msec__title" id="h-garniry"><span class="num">05</span>Гарниры</h2>
+          <ul class="dgrid">
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-potato-480.webp" srcset="img/menu-potato-480.webp 480w, img/menu-potato-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">картофель</span></div><div class="dcard__body"><h3 class="dcard__name">Картофель в&nbsp;золе<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span></h3><p class="dcard__desc">солёное масло, укроп</p><div class="dcard__foot"><span class="dcard__w num">200&nbsp;г</span><b class="dcard__price num">350&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-carrot-480.webp" srcset="img/menu-carrot-480.webp 480w, img/menu-carrot-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">морковь</span></div><div class="dcard__body"><h3 class="dcard__name">Печёная морковь с&nbsp;мёдом<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg></span></h3><p class="dcard__desc">тмин, сметана</p><div class="dcard__foot"><span class="dcard__w num">180&nbsp;г</span><b class="dcard__price num">350&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-porcini2-480.webp" srcset="img/menu-porcini2-480.webp 480w, img/menu-porcini2-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">белый гриб</span></div><div class="dcard__body"><h3 class="dcard__name">Гречка с&nbsp;белыми грибами<span class="dcard__tags"><svg class="tag" role="img" aria-label="вегетарианское"><use href="#t-veg"/></svg><svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span></h3><p class="dcard__desc">томлёная в&nbsp;чугунке</p><div class="dcard__foot"><span class="dcard__w num">200&nbsp;г</span><b class="dcard__price num">450&nbsp;₽</b></div></div></li>
           </ul>
         </section>
 
         <section class="msec" id="s-deserty" aria-labelledby="h-deserty">
-          <h2 class="msec__title" id="h-deserty" data-reveal><span class="num">06</span>Десерты</h2>
-          <ul class="mlist">
-            <li class="mrow" data-photo="img/dish-apple-720.webp"><span class="mrow__name">Печёное яблоко</span><span class="mrow__desc">мороженое из&nbsp;ряженки, овсяный крамбл</span><span class="mrow__w num">220&nbsp;г</span><span class="mrow__price num">550&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Медовик с&nbsp;огня</span><span class="mrow__desc">коржи на&nbsp;гречишном мёде, сметанный крем</span><span class="mrow__w num">150&nbsp;г</span><span class="mrow__price num">590&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Творожный крем с&nbsp;облепихой<svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span><span class="mrow__desc">облепиховый соус, безе</span><span class="mrow__w num">160&nbsp;г</span><span class="mrow__price num">520&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">«Шоколад и&nbsp;дым»<svg class="tag" role="img" aria-label="с орехами"><use href="#t-nuts"/></svg></span><span class="mrow__desc">тёмный ганаш, копчёная соль, фундук</span><span class="mrow__w num">140&nbsp;г</span><span class="mrow__price num">650&nbsp;₽</span></li>
+          <h2 class="msec__title" id="h-deserty"><span class="num">06</span>Десерты</h2>
+          <ul class="dgrid">
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-apple-480.webp" srcset="img/menu-apple-480.webp 480w, img/menu-apple-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">яблоня</span></div><div class="dcard__body"><h3 class="dcard__name">Печёное яблоко</h3><p class="dcard__desc">мороженое из&nbsp;ряженки, овсяный крамбл</p><div class="dcard__foot"><span class="dcard__w num">220&nbsp;г</span><b class="dcard__price num">550&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-buckwheat-480.webp" srcset="img/menu-buckwheat-480.webp 480w, img/menu-buckwheat-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">гречиха</span></div><div class="dcard__body"><h3 class="dcard__name">Медовик с&nbsp;огня</h3><p class="dcard__desc">коржи на&nbsp;гречишном мёде, сметанный крем</p><div class="dcard__foot"><span class="dcard__w num">150&nbsp;г</span><b class="dcard__price num">590&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-buckthorn-480.webp" srcset="img/menu-buckthorn-480.webp 480w, img/menu-buckthorn-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">облепиха</span></div><div class="dcard__body"><h3 class="dcard__name">Творожный крем с&nbsp;облепихой<span class="dcard__tags"><svg class="tag" role="img" aria-label="без глютена"><use href="#t-gluten"/></svg></span></h3><p class="dcard__desc">облепиховый соус, безе</p><div class="dcard__foot"><span class="dcard__w num">160&nbsp;г</span><b class="dcard__price num">520&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-cocoa-480.webp" srcset="img/menu-cocoa-480.webp 480w, img/menu-cocoa-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">какао</span></div><div class="dcard__body"><h3 class="dcard__name">«Шоколад и&nbsp;дым»<span class="dcard__tags"><svg class="tag" role="img" aria-label="с орехами"><use href="#t-nuts"/></svg></span></h3><p class="dcard__desc">тёмный ганаш, копчёная соль, фундук</p><div class="dcard__foot"><span class="dcard__w num">140&nbsp;г</span><b class="dcard__price num">650&nbsp;₽</b></div></div></li>
           </ul>
         </section>
 
         <section class="msec" id="s-napitki" aria-labelledby="h-napitki">
-          <h2 class="msec__title" id="h-napitki" data-reveal><span class="num">07</span>Напитки</h2>
-          <ul class="mlist">
-            <li class="mrow"><span class="mrow__name">Морс клюквенный</span><span class="mrow__desc">варим сами, без&nbsp;сахарного сиропа</span><span class="mrow__w num">300&nbsp;мл</span><span class="mrow__price num">290&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Иван-чай</span><span class="mrow__desc">чайник, мёд и&nbsp;сушёные яблоки</span><span class="mrow__w num">600&nbsp;мл</span><span class="mrow__price num">350&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Квас из&nbsp;печи</span><span class="mrow__desc">на&nbsp;нашем ржаном хлебе</span><span class="mrow__w num">300&nbsp;мл</span><span class="mrow__price num">290&nbsp;₽</span></li>
-            <li class="mrow"><span class="mrow__name">Лимонад «Облепиха и&nbsp;розмарин»</span><span class="mrow__desc">без&nbsp;сиропов, на&nbsp;облепиховом пюре</span><span class="mrow__w num">400&nbsp;мл</span><span class="mrow__price num">390&nbsp;₽</span></li>
+          <h2 class="msec__title" id="h-napitki"><span class="num">07</span>Напитки</h2>
+          <ul class="dgrid">
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-cranberry-480.webp" srcset="img/menu-cranberry-480.webp 480w, img/menu-cranberry-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">клюква</span></div><div class="dcard__body"><h3 class="dcard__name">Морс клюквенный</h3><p class="dcard__desc">варим сами, без&nbsp;сахарного сиропа</p><div class="dcard__foot"><span class="dcard__w num">300&nbsp;мл</span><b class="dcard__price num">290&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-fireweed-480.webp" srcset="img/menu-fireweed-480.webp 480w, img/menu-fireweed-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">иван-чай</span></div><div class="dcard__body"><h3 class="dcard__name">Иван-чай</h3><p class="dcard__desc">чайник, мёд и&nbsp;сушёные яблоки</p><div class="dcard__foot"><span class="dcard__w num">600&nbsp;мл</span><b class="dcard__price num">350&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-mint-480.webp" srcset="img/menu-mint-480.webp 480w, img/menu-mint-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">мята</span></div><div class="dcard__body"><h3 class="dcard__name">Квас из&nbsp;печи</h3><p class="dcard__desc">на&nbsp;нашем ржаном хлебе</p><div class="dcard__foot"><span class="dcard__w num">300&nbsp;мл</span><b class="dcard__price num">290&nbsp;₽</b></div></div></li>
+            <li class="dcard"><div class="dcard__pic"><img src="img/menu-rosemary-480.webp" srcset="img/menu-rosemary-480.webp 480w, img/menu-rosemary-800.webp 800w" sizes="(max-width: 600px) 112px, (max-width: 1100px) 44vw, 300px" alt="" width="480" height="480" loading="lazy"><span class="dcard__plant">розмарин</span></div><div class="dcard__body"><h3 class="dcard__name">Лимонад «Облепиха и&nbsp;розмарин»</h3><p class="dcard__desc">без&nbsp;сиропов, на&nbsp;облепиховом пюре</p><div class="dcard__foot"><span class="dcard__w num">400&nbsp;мл</span><b class="dcard__price num">390&nbsp;₽</b></div></div></li>
           </ul>
         </section>
 
         <section class="msec msec--plain" id="s-vino" aria-labelledby="h-vino">
-          <h2 class="msec__title" id="h-vino" data-reveal><span class="num">08</span>Вино по&nbsp;бокалам</h2>
+          <h2 class="msec__title" id="h-vino"><span class="num">08</span>Вино по&nbsp;бокалам</h2>
           <ul class="mlist">
             <li class="mrow"><span class="mrow__name">Игристое брют</span><span class="mrow__desc">Краснодарский край</span><span class="mrow__w num">125&nbsp;мл</span><span class="mrow__price num">650&nbsp;₽</span></li>
             <li class="mrow"><span class="mrow__name">Белое сухое</span><span class="mrow__desc">Крым</span><span class="mrow__w num">150&nbsp;мл</span><span class="mrow__price num">690&nbsp;₽</span></li>
@@ -218,22 +218,23 @@
           <p class="msec__note">Полная винная карта&nbsp;— у&nbsp;сомелье. Алкоголь подаём гостям старше 18&nbsp;лет.</p>
         </section>
 
-        <p class="menu__note">Цены в&nbsp;рублях. Об&nbsp;аллергии скажите официанту&nbsp;— повар учтёт. Блюда без&nbsp;фото мы&nbsp;не&nbsp;снимали специально: заходите посмотреть вживую.</p>
+        <p class="menu__note">Цены в&nbsp;рублях. Об&nbsp;аллергии скажите официанту&nbsp;— повар учтёт. Иллюстрации&nbsp;— ботанические таблицы XIX&nbsp;века (О.&nbsp;В.&nbsp;Томе, Ф.&nbsp;Кёлер, К.&nbsp;Линдман, Вильморен-Андриё), общественное достояние.</p>
       </div>
     </div>
+<!-- @end-menu -->
 
     <section class="mset" id="s-set" aria-labelledby="h-set">
       <div class="container mset__inner">
         <div class="mset__head">
           <p class="label" data-reveal>09 · сет шефа</p>
           <h2 class="h2" id="h-set" data-lines><span class="line"><span>«Вечер у&nbsp;огня»</span></span><span class="line"><span><em>7&nbsp;курсов</em></span></span></h2>
-          <p class="text" data-reveal>Шеф Даниил Соболев собирает вечер от&nbsp;печи до&nbsp;углей: хлеб, уха, рыба, щека, оленина и&nbsp;яблоко из&nbsp;остывающей печи. Около двух с&nbsp;половиной часов.</p>
+          <p class="text" data-reveal>Шеф Даниил Соболев собирает вечер от&nbsp;печи до&nbsp;углей: хлеб, северные закуски, тыквенный суп, щука, щека, оленина и&nbsp;яблоко из&nbsp;остывающей печи. Около двух с&nbsp;половиной часов.</p>
           <p class="mset__price" data-reveal><b class="num">6&nbsp;900&nbsp;₽</b> на&nbsp;гостя · по&nbsp;записи за&nbsp;день</p>
           <a class="btn btn--fire" href="bron.html?set=1" data-reveal>Забронировать с&nbsp;сетом</a>
         </div>
         <ol class="mset__list">
           <li data-reveal><span class="num">01</span>Ржаной хлеб и&nbsp;масло с&nbsp;дымком</li>
-          <li data-reveal><span class="num">02</span>Уха на&nbsp;углях</li>
+          <li data-reveal><span class="num">02</span>Строганина, паштет и&nbsp;квашеное</li>
           <li data-reveal><span class="num">03</span>Суп из&nbsp;печёной тыквы</li>
           <li data-reveal><span class="num">04</span>Щука из&nbsp;печи, раки, укроп</li>
           <li data-reveal><span class="num">05</span>Говяжья щека, 12&nbsp;часов</li>
@@ -242,7 +243,6 @@
         </ol>
       </div>
     </section>
-    <div class="float-photo" aria-hidden="true" data-float><img alt=""></div>
   </main>
 
 <!-- @footer -->
@@ -256,11 +256,11 @@
   </div>
   <div class="footer__grid container">
     <nav class="bignav" aria-label="Страницы сайта" data-bignav>
-      <a class="bignav__item" href="menu.html" aria-current="page"><span class="bignav__word">Меню <small>02</small></span><span class="bignav__run" aria-hidden="true"><span><b>хлеб из&nbsp;печи</b><img src="img/dish-bread-400.webp" alt=""><b>утка на&nbsp;углях</b><img src="img/dish-steak-400.webp" alt=""><b>печёное яблоко</b><img src="img/dish-apple-400.webp" alt=""><b>хлеб из&nbsp;печи</b><img src="img/dish-bread-400.webp" alt=""><b>утка на&nbsp;углях</b><img src="img/dish-steak-400.webp" alt=""><b>печёное яблоко</b><img src="img/dish-apple-400.webp" alt=""></span></span></a>
-      <a class="bignav__item" href="o-restorane.html"><span class="bignav__word">О ресторане <small>03</small></span><span class="bignav__run" aria-hidden="true"><span><b>почему ольха</b><img src="img/embers-720.webp" alt=""><b>шеф и&nbsp;команда</b><img src="img/team-720.webp" alt=""><b>почему ольха</b><img src="img/embers-720.webp" alt=""><b>шеф и&nbsp;команда</b><img src="img/team-720.webp" alt=""><b>почему ольха</b><img src="img/embers-720.webp" alt=""></span></span></a>
-      <a class="bignav__item" href="zaly.html"><span class="bignav__word">Залы <small>04</small></span><span class="bignav__run" aria-hidden="true"><span><b>у&nbsp;печи</b><img src="img/hall-pech-720.webp" alt=""><b>камин</b><img src="img/hall-kamin-720.webp" alt=""><b>шеф-стол</b><img src="img/hall-chefstol-720.webp" alt=""><b>терраса</b><img src="img/hall-terrasa-720.webp" alt=""><b>у&nbsp;печи</b><img src="img/hall-pech-720.webp" alt=""><b>камин</b><img src="img/hall-kamin-720.webp" alt=""></span></span></a>
-      <a class="bignav__item" href="sobytiya.html"><span class="bignav__word">События и банкеты <small>05</small></span><span class="bignav__run" aria-hidden="true"><span><b>ужин при&nbsp;свечах</b><img src="img/candles-2-720.webp" alt=""><b>банкеты до&nbsp;60&nbsp;гостей</b><img src="img/event-candles-720.webp" alt=""><b>ужин при&nbsp;свечах</b><img src="img/candles-2-720.webp" alt=""><b>банкеты до&nbsp;60&nbsp;гостей</b><img src="img/event-candles-720.webp" alt=""></span></span></a>
-      <a class="bignav__item" href="kontakty.html"><span class="bignav__word">Контакты <small>07</small></span><span class="bignav__run" aria-hidden="true"><span><b>Ольховская улица</b><b>·</b><b>м.&nbsp;Бауманская</b><b>·</b><b>Ольховская улица</b><b>·</b><b>м.&nbsp;Бауманская</b><b>·</b><b>Ольховская улица</b><b>·</b></span></span></a>
+      <a class="bignav__item" href="menu.html" aria-current="page"><span class="bignav__word">Меню <small>02</small></span></a>
+      <a class="bignav__item" href="o-restorane.html"><span class="bignav__word">О ресторане <small>03</small></span></a>
+      <a class="bignav__item" href="zaly.html"><span class="bignav__word">Залы <small>04</small></span></a>
+      <a class="bignav__item" href="sobytiya.html"><span class="bignav__word">События и банкеты <small>05</small></span></a>
+      <a class="bignav__item" href="kontakty.html"><span class="bignav__word">Контакты <small>07</small></span></a>
     </nav>
     <dl class="info">
       <dt>Адрес</dt><dd>Москва, Ольховская улица<br>м.&nbsp;Бауманская, 7&nbsp;минут пешком</dd>
@@ -296,8 +296,6 @@
     </div>
   </div>
 </div>
-
-<div class="cursor" aria-hidden="true" data-cursor><span class="cursor__dot"></span><span class="cursor__ring" data-cursor-label>Смотреть</span></div>
 <!-- @end -->
 
   <script src="js/main.js" defer></script>
