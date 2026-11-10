@@ -1,7 +1,7 @@
 /* Небосвод, демо-копия: полоска «демо-версия», пометка на «Спасибо», страница «Источники фото». */
 .nb-demo {
   position: relative;
-  z-index: 1000;
+  z-index: 2; /* выше фона со звёздами (.sky, z-index 0), ниже липкой шапки */
   padding: 7px 16px;
   background: #0B101D;
   border-bottom: 1px solid rgba(216, 184, 120, .22);

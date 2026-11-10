@@ -231,3 +231,9 @@ body.nb-site {
   .nb-site .menu-toggle-open { padding: 8px; }
 }
 @media (max-width: 360px) { .nb-site .mobile-site-branding .site-title { letter-spacing: .1em; font-size: 15px; } }
+
+/* Меню на телефоне: адрес, часы и телефон столбиком — в строку они переносились с «·» в начале строки */
+#mobile-drawer .nb-top { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+#mobile-drawer .nb-top__sep { display: none; }
+/* в меню на телефоне переключатель языка — как остальные пункты (на ПК он мельче, это второстепенный пункт шапки) */
+#mobile-drawer .lang-item a { font-size: inherit; letter-spacing: 0; color: var(--nb-mist); }
