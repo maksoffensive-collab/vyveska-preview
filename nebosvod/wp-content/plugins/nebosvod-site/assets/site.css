@@ -27,7 +27,29 @@ body.nb-site {
   background: linear-gradient(180deg, #1B2340 0, #2A2440 520px, #3A2A2E 760px, #1A2036 1100px, var(--nb-dusk) 45%, var(--nb-night) 82%, #080C16 100%) !important;
   background-attachment: scroll;
 }
-.nb-site .sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+/* 100lvh: на телефоне адресная строка прячется при прокрутке — небо не растягивается и не перерисовывается */
+.nb-site .sky, .nb-site .sky-mw { position: fixed; top: 0; left: 0; width: 100%; height: 100%; height: 100lvh; z-index: 0; pointer-events: none; }
+.nb-site .sky-mw { opacity: .85; filter: opacity(0); transition: filter 1.4s ease; }
+.nb-site .sky-mw.on { filter: none; }
+/* Луна (sky.js): серп справа вверху первого экрана, рядом вечерняя звезда (Венера светит ровно, без мерцания); уходит вверх вместе со страницей */
+.nb-moon { position: absolute; z-index: 0; top: 128px; right: max(0px, calc(17vw - 98px)); width: 196px; height: 196px; pointer-events: none; }
+.nb-moon svg { display: block; width: 100%; height: 100%; }
+.nb-moon__star { position: absolute; left: 3%; top: 24%; width: 15px; height: 15px; translate: -50% -50%; fill: #FFF4DC;
+  filter: drop-shadow(0 0 2px rgba(255, 244, 220, .9)) drop-shadow(0 0 8px rgba(216, 184, 120, .5)); }
+.nb-moon--gap .nb-moon__star { left: 9%; top: 40%; }
+@media (max-width: 760px) {
+  .nb-moon { top: 96px; right: max(0px, calc(19vw - 63px)); width: 126px; height: 126px; }
+  .nb-moon__star { width: 11px; height: 11px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* где браузер умеет анимацию от прокрутки: луна уходит вверх вдвое медленнее страницы, Млечный Путь к ночи ярче */
+  @supports (animation-timeline: scroll()) {
+    .nb-moon { animation: nb-moon-drift linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    .nb-site .sky-mw { animation: nb-mw-rise linear both; animation-timeline: scroll(root); animation-range: 0 120vh; }
+  }
+}
+@keyframes nb-moon-drift { to { transform: translateY(50vh); } }
+@keyframes nb-mw-rise { from { opacity: .7; } to { opacity: .92; } }
 .nb-site #wrapper { position: relative; z-index: 1; background: transparent; }
 .nb-site .site, .nb-site .content-bg, .nb-site .site-container, .nb-site .entry-content-wrap, .nb-site .content-area,
 .nb-site .entry.single-entry, .nb-site .site-main, .nb-site #inner-wrap { background: transparent !important; box-shadow: none !important; }
