@@ -1,0 +1,24 @@
+/* Небосвод, демо-копия: полоска «демо-версия», пометка на «Спасибо», страница «Источники фото». */
+.nb-demo {
+  position: relative;
+  z-index: 1000;
+  padding: 7px 16px;
+  background: #0B101D;
+  border-bottom: 1px solid rgba(216, 184, 120, .22);
+  color: #B8BCCB;
+  font: 400 12.5px/1.45 'Golos Text', system-ui, sans-serif;
+  text-align: center;
+}
+.nb-demo a { color: #D8B878; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.nb-demo a:hover { color: #E9D3A2; }
+
+.nb-demo-note {
+  max-width: 34em;
+  margin: 0 auto 1.6em;
+  padding: 12px 16px;
+  line-height: 1.5;
+  border: 1px solid rgba(216, 184, 120, .35);
+  border-radius: 8px;
+  color: #E9D3A2;
+  font-size: 15px;
+}

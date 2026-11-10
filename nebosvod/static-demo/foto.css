@@ -1,0 +1,22 @@
+/* Небосвод, демо-копия: страница «Источники фото». Шрифты — те же файлы, что на сайте. */
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:400 600;font-display:swap;src:url(../wp-content/plugins/nebosvod-site/assets/fonts/golos-cyrillic.woff2) format("woff2");unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:400 600;font-display:swap;src:url(../wp-content/plugins/nebosvod-site/assets/fonts/golos-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:400 600;font-display:swap;src:url(../wp-content/plugins/nebosvod-site/assets/fonts/golos-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Prata";font-style:normal;font-weight:400;font-display:swap;src:url(../wp-content/plugins/nebosvod-site/assets/fonts/prata-cyrillic.woff2) format("woff2");unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
+@font-face{font-family:"Prata";font-style:normal;font-weight:400;font-display:swap;src:url(../wp-content/plugins/nebosvod-site/assets/fonts/prata-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+
+
+.nbd-page { margin: 0; background: #0B101D; color: #E3DDD0; font: 400 16px/1.6 'Golos Text', system-ui, sans-serif; }
+.nbd-wrap { max-width: 920px; margin: 0 auto; padding: 40px 16px 72px; }
+.nbd-page a { color: #D8B878; }
+.nbd-back { text-decoration: none; font-size: 15px; }
+.nbd-page h1 { margin: 24px 0 18px; color: #F6F0E4; font: 400 clamp(32px, 6vw, 48px)/1.15 Prata, Georgia, serif; }
+.nbd-page h1 span { display: block; margin-top: 6px; color: #8C94AB; font: 400 15px/1.4 'Golos Text', system-ui, sans-serif; letter-spacing: .04em; }
+.nbd-lead { max-width: 680px; margin: 0 0 12px; color: #B8BCCB; }
+.nbd-en { color: #8C94AB; font-size: 14px; }
+.nbd-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 32px 0 0; padding: 0; list-style: none; }
+.nbd-card { overflow: hidden; background: #131A2E; border: 1px solid #1C2440; border-radius: 8px; }
+.nbd-card img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.nbd-card div { padding: 14px 16px 16px; }
+.nbd-card h2 { margin: 0 0 8px; color: #F6F0E4; font: 400 19px/1.3 Prata, Georgia, serif; }
+.nbd-card p { margin: 0 0 4px; color: #B8BCCB; font-size: 14px; overflow-wrap: anywhere; }
