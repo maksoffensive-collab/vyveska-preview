@@ -83,10 +83,13 @@ body.nb-site {
 .nb-btn--ghost:hover, .nb-site .is-style-outline .wp-block-button__link:hover { background: rgba(216, 184, 120, .1); color: var(--nb-gold2) !important; }
 
 /* Секции страниц (группы с классом nb-sec) */
-.nb-sec { padding: 112px 24px !important; }
+/* Ритм (10.11, «сайт как будто растянут»): было 112/64 px и ещё 32 px темы под каждым блоком — между блоками 210–370 px пустоты.
+   Теперь как в пине 1: обычный блок 72 px, плотный 44 px, без лишнего отступа темы */
+.nb-sec { padding: 72px 24px !important; }
+.nb-site .entry-content > .nb-sec { margin-top: 0 !important; margin-bottom: 0 !important; }
 .nb-sec > * { max-width: 1240px; margin-left: auto !important; margin-right: auto !important; }
 .nb-sec > .nb-lead, .nb-sec > .has-text-align-center:not(.wp-block-heading) { max-width: 64ch; }
-.nb-sec--tight { padding: 64px 24px !important; }
+.nb-sec--tight { padding: 44px 24px !important; }
 .nb-sec h2, .nb-site .entry-content h2 { font-family: var(--nb-serif); font-weight: 400; color: var(--nb-candle); }
 .nb-site .entry-content h2 em, .nb-site .entry-content h1 em { font-style: normal; color: var(--nb-gold); }
 .nb-lead { max-width: 64ch; margin-left: auto !important; margin-right: auto !important; color: var(--nb-mist) !important; font-size: 19px; }
@@ -95,7 +98,8 @@ body.nb-site {
 .nb-star { display: inline-block; vertical-align: -1px; color: var(--nb-gold); }
 
 /* Первый экран */
-.nb-hero { min-height: calc(100svh - 120px); display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 56px 0 72px !important; }
+/* первый экран чуть ниже окна: снизу выглядывает следующий блок — видно, что дальше есть продолжение */
+.nb-hero { min-height: clamp(540px, calc(100svh - 230px), 760px); display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 56px 0 72px !important; }
 .nb-hero .wp-block-cover__inner-container { width: 100%; }
 .nb-word {
   font: 400 clamp(44px, 10vw, 148px)/1 var(--nb-serif); letter-spacing: .06em; margin: 0 0 14px; text-align: center; white-space: nowrap;
@@ -117,6 +121,55 @@ body.nb-site {
 .nb-sec--doc p, .nb-sec--doc li { max-width: 72ch; }
 .nb-sec .wp-block-columns { gap: 40px; }
 .nb-sec .wp-block-column h3 { font-family: var(--nb-serif); font-weight: 400; color: var(--nb-candle); font-size: 24px; }
+
+/* Главная, «Зал со звёздным небом»: на ПК фото слева, текст справа, в углу фото плитка со звездой (пин 1, «Our story») */
+.nb-sec--split .nb-photo--wide { margin: 40px 0 0 !important; }
+.nb-sec--split .nb-photo--wide img { width: 100%; height: auto; }
+.nb-sec--split .wp-block-buttons { margin-top: 28px; }
+@media (min-width: 900px) {
+  .nb-sec--split > .wp-block-group__inner-container { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); grid-template-rows: 1fr auto auto auto auto 1fr; column-gap: 72px; }
+  .nb-sec--split > .wp-block-group__inner-container > * { grid-column: 2; margin-left: 0 !important; margin-right: 0 !important; max-width: none; }
+  .nb-sec--split > .wp-block-group__inner-container > :nth-child(1) { grid-row: 2; }
+  .nb-sec--split > .wp-block-group__inner-container > :nth-child(2) { grid-row: 3; }
+  .nb-sec--split > .wp-block-group__inner-container > :nth-child(3) { grid-row: 4; }
+  .nb-sec--split > .wp-block-group__inner-container > .wp-block-buttons { grid-row: 5; justify-content: flex-start; }
+  .nb-sec--split > .wp-block-group__inner-container > .nb-photo--wide { grid-column: 1; grid-row: 1 / -1; margin: 0 28px 28px 0 !important; align-self: center; }
+  .nb-sec--split .nb-div { justify-content: flex-start; }
+  .nb-sec--split .has-text-align-center { text-align: left !important; }
+  .nb-sec--split .nb-lead { font-size: 18px; }
+}
+.nb-sec--split .nb-photo--wide { position: relative; }
+@media (min-width: 900px) {
+  .nb-sec--split .nb-photo--wide::after {
+    content: ''; position: absolute; right: -28px; bottom: -28px; width: 112px; height: 112px; border-radius: 10px;
+    border: 1px solid rgba(216, 184, 120, .35); background: #131A2E url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0l2.6 7.4L20 10l-7.4 2.6L10 20l-2.6-7.4L0 10l7.4-2.6z' fill='%23D8B878'/%3E%3C/svg%3E") center / 34px no-repeat;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  }
+}
+/* Три преимущества: строка в тонкой рамке с разделителями (пин 1) */
+.nb-sec--feats .wp-block-columns { gap: 0 !important; margin: 0; padding: 36px 0; border: 1px solid rgba(216, 184, 120, .22); border-radius: 12px; background: rgba(11, 16, 29, .38); }
+.nb-sec--feats .wp-block-column { padding: 0 32px; }
+.nb-sec--feats .wp-block-column h3 { margin: 0 0 10px; font-size: 22px; }
+.nb-sec--feats .wp-block-column p { margin: 0; color: var(--nb-mist); }
+.nb-sec--feats .nb-div { margin-bottom: 16px; }
+.nb-sec--feats .wp-block-column + .wp-block-column { border-left: 1px solid rgba(216, 184, 120, .16); }
+@media (max-width: 781px) {
+  .nb-sec--feats .wp-block-columns { padding: 28px 0; }
+  .nb-sec--feats .wp-block-column { padding: 0 20px; }
+  .nb-sec--feats .wp-block-column + .wp-block-column { border-left: 0; border-top: 1px solid rgba(216, 184, 120, .16); padding-top: 26px; margin-top: 26px !important; }
+}
+/* Банкеты на главной: плашка, текст слева, кнопка справа */
+.nb-sec--band > .wp-block-group__inner-container { border: 1px solid rgba(216, 184, 120, .22); border-radius: 12px; padding: 40px 48px; background: linear-gradient(100deg, rgba(42, 34, 50, .55), rgba(19, 26, 46, .55)); }
+.nb-sec--band .nb-div { display: none; }
+.nb-sec--band h2 { margin-top: 0 !important; }
+@media (min-width: 900px) {
+  .nb-sec--band > .wp-block-group__inner-container { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 48px; align-items: center; }
+  .nb-sec--band > .wp-block-group__inner-container > * { grid-column: 1; margin-left: 0 !important; margin-right: 0 !important; max-width: 60ch; text-align: left !important; }
+  .nb-sec--band > .wp-block-group__inner-container > .wp-block-buttons { grid-column: 2; grid-row: 1 / span 3; margin: 0 !important; }
+  .nb-sec--band h2 { margin-bottom: 10px !important; }
+  .nb-sec--band .nb-lead { margin-bottom: 0 !important; }
+}
+@media (max-width: 899px) { .nb-sec--band > .wp-block-group__inner-container { padding: 28px 20px; } }
 
 /* Карточки блюд */
 .nb-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 24px; margin-top: 40px; }
@@ -209,7 +262,7 @@ body.nb-site {
 
 /* Подвал */
 .nb-site .site-footer .site-footer-wrap { display: none; } /* строки подвала Kadence пустые, подвал — наш */
-.nb-foot { position: relative; z-index: 1; text-align: center; padding: 120px 24px 48px; max-width: 1240px; margin: 0 auto; color: var(--nb-mist); }
+.nb-foot { position: relative; z-index: 1; text-align: center; padding: 72px 24px 48px; max-width: 1240px; margin: 0 auto; color: var(--nb-mist); }
 .nb-foot__star { width: 10px; height: 10px; margin: 0 auto 26px; border-radius: 50%; background: #FFF8E8; box-shadow: 0 0 12px 4px rgba(255, 248, 232, .55), 0 0 44px 16px rgba(216, 184, 120, .22); }
 .nb-foot__title { font: 400 clamp(28px, 3.4vw, 40px)/1.2 var(--nb-serif); color: var(--nb-candle); margin: 0 0 22px; }
 .nb-foot__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 980px; margin: 56px auto 40px; text-align: left; }
@@ -232,9 +285,10 @@ body.nb-site {
 
 /* Телефон */
 @media (max-width: 760px) {
-  .nb-sec { padding: 64px 16px !important; }
-  .nb-sec--tight { padding: 48px 16px !important; }
-  .nb-hero { min-height: calc(100svh - 80px); padding: 40px 0 56px !important; }
+  .nb-sec { padding: 52px 16px !important; }
+  .nb-sec--tight { padding: 36px 16px !important; }
+  .nb-foot { padding-top: 56px; }
+  .nb-hero { min-height: calc(100svh - 170px); padding: 40px 0 48px !important; }
   .nb-book { padding: 20px 16px; }
   .nb-book__grid { grid-template-columns: 1fr; gap: 14px; }
   .nb-foot__cols { grid-template-columns: 1fr; text-align: center; gap: 24px; }
