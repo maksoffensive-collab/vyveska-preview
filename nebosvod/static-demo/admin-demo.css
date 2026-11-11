@@ -1,0 +1,17 @@
+/* Демо-админка «Небосвода»: плашка песочницы, окно с объяснением, метки «добавлено в демо». */
+.nbd-sandbox { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin: 12px 20px 0 2px; padding: 10px 16px; border: 1px solid #c9b27a; border-left: 4px solid #b8913b; border-radius: 6px; background: #fbf6e8; color: #3b3220; font-size: 14px; }
+.nbd-sandbox p { margin: 0; flex: 1 1 420px; }
+.nbd-sandbox .nbd-sandbox__a { flex: 0 0 auto; display: flex; gap: 12px; align-items: center; }
+.nbd-sandbox__dot { width: 10px; height: 10px; border-radius: 50%; background: #d8b878; box-shadow: 0 0 0 4px rgba(216, 184, 120, .25); flex: none; }
+.nbd-dlg { max-width: 460px; padding: 22px 24px 18px; border: 0; border-radius: 10px; box-shadow: 0 20px 60px rgba(0, 0, 0, .3); font-size: 14px; }
+.nbd-dlg::backdrop { background: rgba(16, 20, 32, .45); }
+.nbd-dlg__l { margin: 0 0 4px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #8c7a4f; }
+.nbd-dlg h2 { margin: 0 0 8px; font-size: 19px; }
+.nbd-dlg__t { margin: 0 0 16px; line-height: 1.55; color: #3c434a; }
+.nbd-dlg__a { margin: 0; text-align: right; }
+.nbd-tag { display: inline-block; padding: 1px 8px; border-radius: 99px; background: #fbf0d6; border: 1px solid #e2c98e; color: #7a5b17; font-size: 12px; }
+.nbd-row { background: #fffdf6 !important; }
+.nbd-thumb { width: 64px; height: 48px; object-fit: cover; border-radius: 4px; display: block; }
+.nbd-nophoto { color: #8c8f94; font-size: 12px; }
+.nbd-on { color: #008a20; }
+@media (max-width: 782px) { .nbd-sandbox { margin: 10px 10px 0 0; } }

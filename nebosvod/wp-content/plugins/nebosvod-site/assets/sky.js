@@ -57,6 +57,8 @@
     const R = moon.offsetWidth / 7, cx = moon.offsetLeft + moon.offsetWidth / 2, cy = moon.offsetTop + moon.offsetHeight / 2;
     const hit = (y, rad) => boxes.some((b) => cx + rad + 10 > b.l && cx - rad - 10 < b.r && y + rad + 10 > b.t && y - rad - 10 < b.b);
     const under = cy - R < top + 6;                                // залезла под шапку или полоску «демо»
+    // звезда стоит над луной: если она ушла под шапку или полоску — ставим её сбоку, луну не двигаем
+    if (moon.offsetTop + moon.offsetHeight * 0.24 - 10 < top) moon.classList.add('nb-moon--gap');
     if (!boxes.length || (!under && !hit(cy, R))) return;
     const gap = Math.min(...boxes.map((b) => b.t)) - top, r2 = Math.min(R, (gap - 20) / 2);
     if (r2 < 9 || hit(top + gap / 2, r2)) { moon.style.display = 'none'; return; }

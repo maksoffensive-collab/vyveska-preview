@@ -1,0 +1,106 @@
+/* Небосвод: схема зала в форме брони (inc/tables.php). Подключается на сайте и на экране «Схема зала» в админке,
+   поэтому у цветов запасные значения — в админке нет переменных site.css. Референсы: ref/13-vybor-stolika. */
+.nb-plan {
+  --g: var(--nb-gold, #D8B878); --g2: var(--nb-gold2, #E9D3A2); --tx: var(--nb-text, #E3DDD0); --ms: var(--nb-mist, #B8BCCB);
+  --sb: var(--nb-sub, #8C94AB); --d2: var(--nb-dusk2, #1C2440); --nt: var(--nb-night, #0B101D);
+  border: 0; margin: 0 0 22px; padding: 0; min-width: 0; font-family: var(--nb-sans, 'Golos Text', system-ui, sans-serif);
+}
+.nb-plan legend { font-size: 15px; color: var(--ms); padding: 0; margin: 0 0 6px; }
+.nb-plan legend small { font-size: 13px; color: var(--sb); margin-left: 4px; }
+.nb-plan .nb-plan__hint { margin: 0 0 12px; font-size: 14px; line-height: 1.5; color: var(--ms); }
+.nb-plan__any { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; margin: 0 0 12px; color: var(--tx); font-size: 15px; cursor: pointer; }
+.nb-plan__any input { width: 18px; height: 18px; accent-color: var(--g); margin: 0; }
+.nb-book .nb-plan__more { margin: -6px 0 18px; font-size: 14px; }
+.nb-plan__more a { color: var(--g); }
+
+/* план: 16:10, на телефоне повёрнут (10:16) — окна слева, столы крупнее */
+.nb-plan__map { position: relative; aspect-ratio: 16 / 10; border-radius: 14px; background: radial-gradient(ellipse at 50% 60%, rgba(42, 37, 65, .55), rgba(11, 16, 29, .2) 70%); user-select: none; -webkit-tap-highlight-color: transparent; }
+.nb-plan__bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nb-plan__bg--v { display: none; }
+.nb-plan__bg .floor { fill: rgba(11, 16, 29, .55); stroke: rgba(216, 184, 120, .32); stroke-width: 2; }
+.nb-plan__bg .dome { fill: rgba(216, 184, 120, .035); stroke: rgba(216, 184, 120, .3); stroke-width: 1.5; stroke-dasharray: 3 7; }
+.nb-plan__bg .star { fill: #F6F0E4; opacity: .55; }
+.nb-plan__bg .win { fill: rgba(143, 168, 216, .85); filter: drop-shadow(0 0 6px rgba(143, 168, 216, .7)); }
+.nb-plan__bg .mull { stroke: rgba(11, 16, 29, .9); stroke-width: 2; }
+.nb-plan__bg .bar { fill: rgba(216, 184, 120, .1); stroke: rgba(216, 184, 120, .35); stroke-width: 1.5; }
+.nb-plan__bg .stool { fill: rgba(140, 148, 171, .28); }
+.nb-plan__bg .room { fill: none; stroke: rgba(140, 148, 171, .3); stroke-width: 1.5; stroke-dasharray: 5 5; }
+.nb-plan__bg .door { fill: #0B101D; }
+
+/* всё, что стоит на плане, — по центру в точке (--x %, --y %) */
+.nb-tbl, .nb-plan__cam, .nb-plan__lbl { position: absolute; left: calc(var(--x) * 1%); top: calc(var(--y) * 1%); transform: translate(-50%, -50%); }
+.nb-plan__lbl { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--sb); white-space: nowrap; pointer-events: none; }
+
+.nb-tbl { width: calc(var(--w) * 1%); aspect-ratio: 1 / var(--ar); display: block; cursor: pointer; border-radius: 10px; }
+.nb-tbl input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: inherit; }
+.nb-tbl svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.nb-tbl .t { fill: #1E2744; stroke: rgba(216, 184, 120, .7); stroke-width: 2.5; transition: fill .2s, stroke .2s; }
+.nb-tbl .c { fill: rgba(140, 148, 171, .4); transition: fill .2s; }
+.nb-tbl__n { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font: 600 15px/1 var(--nb-sans, 'Golos Text', system-ui, sans-serif); color: var(--g2); pointer-events: none; }
+.nb-tbl:hover .t { stroke: var(--g); fill: #26304F; }
+.nb-tbl:has(input:focus-visible) { outline: 2px solid var(--g); outline-offset: 4px; }
+.nb-tbl.is-sel .t { fill: var(--g); stroke: var(--g2); }
+.nb-tbl.is-sel .c { fill: rgba(233, 211, 162, .75); }
+.nb-tbl.is-sel .nb-tbl__n { color: var(--nt); }
+.nb-tbl.is-sel { filter: drop-shadow(0 0 10px rgba(216, 184, 120, .45)); }
+.nb-tbl.is-off { cursor: not-allowed; }
+.nb-tbl.is-off .t { fill: rgba(30, 39, 68, .4); stroke: rgba(140, 148, 171, .3); stroke-dasharray: 4 4; }
+.nb-tbl.is-off .c { fill: rgba(140, 148, 171, .15); }
+.nb-tbl.is-off .nb-tbl__n { color: var(--sb); opacity: .6; }
+
+/* камера на окне */
+.nb-plan__cam { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; border-radius: 50%; border: 1px solid var(--g); background: rgba(11, 16, 29, .92); color: var(--g2); cursor: pointer; box-shadow: 0 0 0 4px rgba(11, 16, 29, .55), 0 0 14px rgba(143, 168, 216, .45); }
+.nb-plan__cam svg { width: 20px; height: 20px; }
+.nb-plan__cam:hover, .nb-plan__cam:focus-visible { background: var(--g); color: var(--nt); outline: none; }
+
+/* подпись под планом */
+.nb-plan .nb-plan__legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: 13px; color: var(--sb); }
+.nb-plan__legend span::before { content: ''; display: inline-block; width: 14px; height: 10px; margin-right: 7px; vertical-align: -1px; border-radius: 3px; }
+.nb-plan__legend .is-free::before { background: #1E2744; border: 1.5px solid rgba(216, 184, 120, .7); }
+.nb-plan__legend .is-sel::before { background: var(--g); }
+.nb-plan__legend .is-no::before { border: 1.5px dashed rgba(140, 148, 171, .45); }
+
+/* выбранный стол */
+.nb-plan__info { display: flex; gap: 14px; align-items: center; line-height: 1.45; margin-top: 12px; padding: 12px 14px; border: 1px solid rgba(216, 184, 120, .3); border-radius: 10px; background: rgba(11, 16, 29, .5); }
+.nb-plan__info[hidden] { display: none; }
+.nb-plan__thumb { flex: none; width: 96px; aspect-ratio: 3 / 2; padding: 0; border: 0; border-radius: 8px; overflow: hidden; cursor: zoom-in; background: var(--d2); }
+.nb-plan__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nb-plan__thumb[hidden] { display: none; }
+.nb-plan .nb-plan__name { margin: 0; color: var(--tx); font-size: 16px; }
+.nb-plan .nb-plan__note { margin: 4px 0 0; color: var(--sb); font-size: 13px; }
+.nb-plan__view { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; min-height: 38px; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--g); background: transparent; color: var(--g); font: 500 14px var(--nb-sans, 'Golos Text', system-ui, sans-serif); cursor: pointer; }
+.nb-plan__view svg { width: 18px; height: 18px; }
+.nb-plan__view:hover { background: rgba(216, 184, 120, .12); }
+.nb-plan__view[hidden] { display: none; }
+
+/* фото на весь экран */
+.nb-plan__dlg { max-width: min(1100px, 94vw); width: fit-content; padding: 0; border: 1px solid rgba(216, 184, 120, .35); border-radius: 14px; background: #0B101D; color: var(--tx); overflow: visible; }
+.nb-plan__dlg::backdrop { background: rgba(5, 8, 16, .82); backdrop-filter: blur(3px); }
+.nb-plan__dlg figure { margin: 0; }
+.nb-plan__dlg img { display: block; width: auto; height: auto; max-width: min(1100px, 94vw); max-height: 78vh; border-radius: 13px 13px 0 0; }
+.nb-plan__dlg figcaption { margin: 0; padding: 12px 16px 14px; font-size: 15px; color: var(--ms); }
+.nb-plan__close { position: absolute; top: -14px; right: -14px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--g); background: #0B101D; color: var(--g2); font-size: 24px; line-height: 1; cursor: pointer; }
+
+@media (max-width: 560px) {
+  .nb-plan__map { aspect-ratio: 10 / 16; }
+  .nb-plan__bg--h { display: none; }
+  .nb-plan__bg--v { display: block; }
+  .nb-tbl, .nb-plan__cam, .nb-plan__lbl { left: calc(var(--vx, var(--y)) * 1%); top: calc(var(--vy, var(--x)) * 1%); }
+  .nb-plan__lbl--v { writing-mode: vertical-rl; }
+  .nb-tbl { width: calc(var(--w) * 1.6%); }        /* размер — от длинной стороны плана, как на ПК */
+  .nb-plan__lbl { font-size: 10px; letter-spacing: .08em; }
+  .nb-plan__info { align-items: flex-start; }
+  .nb-plan__thumb { width: 84px; }
+  .nb-plan__close { top: 8px; right: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .nb-tbl .t, .nb-tbl .c { transition: none; } }
+
+/* админка: «Схема зала» */
+.nb-tables-adm .nb-picks { display: flex; flex-wrap: wrap; gap: 16px; margin: 10px 0 24px; }
+.nb-tables-adm .nb-pick { display: grid; gap: 6px; width: 200px; }
+.nb-tables-adm .nb-pick__l { font-weight: 600; }
+.nb-tables-adm .nb-pick__img { width: 200px; aspect-ratio: 3 / 2; padding: 0; border: 1px solid #c3c4c7; border-radius: 6px; background: #f6f7f7; overflow: hidden; cursor: pointer; }
+.nb-tables-adm .nb-pick__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nb-tables-adm .nb-pick__img.is-empty span { color: #2271b1; font-size: 15px; }
+.nb-tables-adm .nb-tables-list { max-width: 720px; }
+.nb-tables-adm .nb-tables-preview { max-width: 760px; padding: 24px; border-radius: 12px; background: #131A2E; }

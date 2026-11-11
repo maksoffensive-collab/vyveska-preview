@@ -22,3 +22,17 @@
   color: #E9D3A2;
   font-size: 15px;
 }
+
+.nb-demo .nb-demo__admin { font-weight: 600; }
+
+/* окно «здесь гость позвонит в ресторан» (телефон, почта) */
+.nb-demo-dlg { max-width: 440px; padding: 26px 26px 22px; border: 1px solid rgba(216, 184, 120, .4); border-radius: 14px; background: #0F1526; color: #E3DDD0; font: 400 16px/1.55 'Golos Text', system-ui, sans-serif; }
+.nb-demo-dlg::backdrop { background: rgba(5, 8, 16, .75); }
+.nb-demo-dlg__l { margin: 0 0 6px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #D8B878; }
+.nb-demo-dlg h2 { margin: 0 0 10px; font: 400 24px/1.25 Prata, Georgia, serif; color: #F6F0E4; }
+.nb-demo-dlg p { margin: 0 0 16px; }
+.nb-demo-dlg .nb-demo-dlg__a { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
+
+/* блюда и акции, добавленные в демо-админке */
+.nb-badge--demo { background: #D8B878 !important; color: #0B101D !important; }
+.nb-card--demo, .nb-offer--demo { outline: 1px dashed rgba(216, 184, 120, .55); outline-offset: 3px; }
